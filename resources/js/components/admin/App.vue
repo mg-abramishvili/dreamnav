@@ -3,14 +3,14 @@
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 shadow" href="/admin">DreamNAV</a>
+                    <router-link :to="{name: 'Home'}" class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 shadow">DreamNAV</router-link>
                     <div class="position-sticky pt-3 sidebar-sticky">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">
+                                <router-link :to="{name: 'Pages'}" class="nav-link active" aria-current="page" href="#">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                     Страницы
-                                </a>
+                                </router-link>
                             </li>
                         </ul>
 

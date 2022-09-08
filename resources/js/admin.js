@@ -5,4 +5,6 @@ import router from './admin-router'
 
 import App from './components/admin/App.vue'
 
-createApp(App).use(router).mount('#app')
+import Loader from './components/admin/Loader.vue'
+
+createApp(App).component('Loader', Loader).use(router).mount('#app')

@@ -102,6 +102,10 @@ body {
     height: 55px;
     line-height: 55px;
 }
+.navbar-brand:hover,
+.navbar-brand:focus {
+    color: #fff;
+}
 .navbar .navbar-toggler {
     top: .25rem;
     right: 1rem;
@@ -131,8 +135,21 @@ body {
     line-height: 55px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 .content-header h1 {
     font-size: 24px;
     margin: 0;
+    display: flex;
+    align-items: center;
+}
+.btn-back {
+    background-color: rgba(0, 0, 0, .1);
+    margin-right: 10px;
+    padding: 0;
+}
+.btn-back svg {
+    width: 30px;
+    height: 30px;
+    display: block;
 }
