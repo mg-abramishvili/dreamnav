@@ -171,3 +171,12 @@ body {
     border: 5px dashed #ccc;
     min-height: 200px;
 }
+.page-area ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+.page-area ul li {
+    display: flex;
+}

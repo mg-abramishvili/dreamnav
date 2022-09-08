@@ -48,12 +48,21 @@
                 <div class="page-area">
                     <ul>
                         <li v-for="block in blocks">
-                            <template v-if="block.type == 'text'">Текст</template>
+                            <template v-if="block.type == 'text'">
+                                <div class="btn btn-secondary">Текст</div>
+                                <button class="btn">&times;</button>
+                            </template>
+
                             <template v-if="block.type == 'picture'">Изображение</template>
+
                             <template v-if="block.type == 'picture_slider'">Слайдер с изображениями</template>
+                            
                             <template v-if="block.type == 'video'">Видеоролик</template>
+
                             <template v-if="block.type == 'pdf'">PDF-файл</template>
+
                             <template v-if="block.type == 'excel'">Excel-файл</template>
+
                             <template v-if="block.type == 'iframe'">iFrame</template>
                         </li>
                     </ul>
