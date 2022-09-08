@@ -8,6 +8,10 @@ Route::prefix("kiosk")->group(function() {
     })->where('any', '.*');
 });
 
+Route::get('/admin', function () {
+    return view('admin');
+});
+
 Route::prefix("admin")->group(function() {
     Route::get('{any}', function () {
         return view('admin');

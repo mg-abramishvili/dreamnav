@@ -1,5 +1,5 @@
 <template>
     <div class="wrapper">
-        admin
+        <router-view></router-view>
     </div>
 </template>
