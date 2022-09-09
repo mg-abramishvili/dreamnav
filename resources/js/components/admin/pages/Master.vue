@@ -49,8 +49,8 @@
                     <ul>
                         <li v-for="block in blocks">
                             <template v-if="block.type == 'text'">
-                                <div class="btn btn-secondary">Текст</div>
-                                <button class="btn">&times;</button>
+                                <button @click="editBlock(block)" class="btn btn-secondary">Текст</button>
+                                <button @click="removeBlock(block.id)" class="btn">&times;</button>
                             </template>
 
                             <template v-if="block.type == 'picture'">Изображение</template>
@@ -69,10 +69,15 @@
                 </div>
             </div>
         </div>
+
+        <BlockMaster v-if="selected.block" :block="selected.block" />
+        <div v-if="selected.block" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
+import BlockMaster from './blocks/Master.vue'
+
 export default {
     data() {
         return {
@@ -83,6 +88,10 @@ export default {
             name: '',
             parent_id: '',
             language_id: '',
+
+            selected: {
+                block: '',
+            },
 
             views: {
                 loading: true,
@@ -106,6 +115,7 @@ export default {
         },
         addBlock(blockType) {
             let newBlock = {
+                id: 'temp_' + blockType + '_' + Math.floor((Math.random()*100) + 1) + '_' + Math.floor((Math.random()*100) + 1),
                 type: blockType,
                 content: 'Текст...',
                 order: 99
@@ -113,6 +123,15 @@ export default {
 
             this.blocks.push(newBlock)
         },
+        removeBlock(id) {
+            this.blocks = this.blocks.filter(block => block.id != id)
+        },
+        editBlock(block) {
+            this.selected.block = block
+        }
     },
+    components: {
+        BlockMaster
+    }
 }
 </script>
