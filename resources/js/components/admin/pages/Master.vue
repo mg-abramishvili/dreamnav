@@ -48,10 +48,10 @@
                 <div class="page-area">
                     <ul>
                         <li v-for="block in blocks">
-                            <template v-if="block.type == 'text'">
-                                <button @click="editBlock(block)" class="btn btn-secondary">Текст</button>
-                                <button @click="removeBlock(block.id)" class="btn">&times;</button>
-                            </template>
+                            <div v-if="block.type == 'text'" class="block-area">
+                                <div @click="editBlock(block)" v-html="block.content"></div>
+                                <button @click="removeBlock(block.id)" class="btn btn-secondary">&times;</button>
+                            </div>
 
                             <template v-if="block.type == 'picture'">Изображение</template>
 
@@ -117,7 +117,7 @@ export default {
             let newBlock = {
                 id: 'temp_' + blockType + '_' + Math.floor((Math.random()*100) + 1) + '_' + Math.floor((Math.random()*100) + 1),
                 type: blockType,
-                content: 'Текст...',
+                content: "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
                 order: 99
             }
 

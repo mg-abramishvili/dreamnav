@@ -170,13 +170,33 @@ body {
 .page-area {
     border: 5px dashed #ccc;
     min-height: 200px;
+    padding: 60px;
 }
 .page-area ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    text-align: center;
 }
 .page-area ul li {
     display: flex;
+}
+.block-area {
+    padding: 15px;
+    position: relative;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+}
+.block-area:hover,
+.block-area:focus {
+    border-color: #2470dc;
+}
+.block-area .btn {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    line-height: 30px;
+    padding: 0;
 }
