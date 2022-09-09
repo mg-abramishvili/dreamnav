@@ -189,6 +189,7 @@ body {
 .block-area:hover,
 .block-area:focus {
     border-color: #2470dc;
+    cursor: pointer;
 }
 .block-area .btn {
     position: absolute;
@@ -199,4 +200,12 @@ body {
     border-radius: 100%;
     line-height: 30px;
     padding: 0;
+}
+.block-area .btn:hover,
+.block-area .btn:focus {
+    background-color: rgb(222, 13, 13);
+    border-color: rgb(222, 13, 13);
+} 
+.block-area p:last-child {
+    margin-bottom: 0;
 }
