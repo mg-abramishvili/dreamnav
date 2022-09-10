@@ -21,6 +21,13 @@ Route::get('admin/scheme/{id}', [App\Http\Controllers\Admin\SchemeController::cl
 Route::put('admin/scheme/{id}/update', [App\Http\Controllers\Admin\SchemeController::class, 'update']);
 Route::delete('admin/scheme/{id}/delete', [App\Http\Controllers\Admin\SchemeController::class, 'delete']);
 
+// ADMIN POINTS
+Route::get('admin/points', [App\Http\Controllers\Admin\PointController::class, 'index']);
+Route::post('admin/points', [App\Http\Controllers\Admin\PointController::class, 'store']);
+Route::get('admin/point/{id}', [App\Http\Controllers\Admin\PointController::class, 'point']);
+Route::put('admin/point/{id}/update', [App\Http\Controllers\Admin\PointController::class, 'update']);
+Route::delete('admin/point/{id}/delete', [App\Http\Controllers\Admin\PointController::class, 'delete']);
+
 // ADMIN FILE UPLOAD
 Route::post('admin/file/upload', [App\Http\Controllers\Admin\FileController::class, 'store']);
 

@@ -213,3 +213,27 @@ body {
 .filepond--root .filepond--credits[style] {
     display: none !important;
 }
+
+.point-drawing-area {
+    border: 4px solid #ddd;
+    width: 1024px;
+    height: 576px;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.point-drawing-area svg {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.point-drawing-area img {
+    width: 100%;
+}

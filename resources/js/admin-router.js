@@ -8,6 +8,9 @@ import PageMaster from './components/admin/pages/Master.vue'
 import Schemes from './components/admin/schemes/Index.vue'
 import SchemeMaster from './components/admin/schemes/Master.vue'
 
+import Points from './components/admin/points/Index.vue'
+import PointMaster from './components/admin/points/Master.vue'
+
 const routes = [
     {
         path: '/admin',
@@ -33,6 +36,16 @@ const routes = [
         path: '/admin/scheme-master/:id?',
         name: 'SchemeMaster',
         component: SchemeMaster
+    },
+    {
+        path: '/admin/points',
+        name: 'Points',
+        component: Points
+    },
+    {
+        path: '/admin/point-master/:id?',
+        name: 'PointMaster',
+        component: PointMaster
     },
 ];
 
