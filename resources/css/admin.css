@@ -209,3 +209,7 @@ body {
 .block-area p:last-child {
     margin-bottom: 0;
 }
+
+.filepond--root .filepond--credits[style] {
+    display: none !important;
+}

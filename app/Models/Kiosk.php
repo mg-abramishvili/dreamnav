@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Kiosk extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 }

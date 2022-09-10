@@ -5,10 +5,12 @@
             <router-link :to="{name: 'PageMaster'}" class="btn btn-primary">Добавить</router-link>
         </div>
 
-        <div class="content p-4">
-            <Loader v-if="views.loading" />
-            
-            <table v-if="!views.loading && pages.length" class="table">
+        <div v-if="views.loading" class="p-4">
+            <Loader />
+        </div>
+
+        <div v-if="!views.loading" class="content p-4">
+            <table v-if="pages.length" class="table">
                 <tbody>
                     <tr v-for="page in pages">
                         <td>{{ page.name }}</td>
@@ -18,7 +20,7 @@
                 </tbody>
             </table>
 
-            <p v-if="!views.loading && !pages.length">Страниц нет.</p>
+            <p v-else>Страниц нет.</p>
         </div>
     </div>
 </template>
