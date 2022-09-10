@@ -113,7 +113,10 @@ export default {
                 this.points.push(x + ' ' + y, (x + 1) + ' ' + (y + 1))
             }
 
-            map.innerHTML = ''
+            let svgs = map.getElementsByTagName("svg")
+            for (var i = 0; i < svgs.length; i++) {
+                svgs[i].remove()
+            }
 
             let xmlns = "http://www.w3.org/2000/svg"
             let svg = document.createElementNS(xmlns, "svg")
