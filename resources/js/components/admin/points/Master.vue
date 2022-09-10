@@ -123,7 +123,7 @@ export default {
             let polygon = document.createElementNS(xmlns, "polygon")
 
             polygon.setAttribute("points", this.points.join())
-            polygon.setAttribute("style", "fill:lime;stroke:purple;stroke-width:2")
+            polygon.setAttribute("style", "fill:lime;stroke:purple;stroke-width:1")
             svg.appendChild(polygon)
             map.appendChild(svg)
         },
