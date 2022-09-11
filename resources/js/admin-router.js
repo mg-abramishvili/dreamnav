@@ -17,6 +17,8 @@ import PointMaster from './components/admin/points/Master.vue'
 import Banners from './components/admin/banners/Index.vue'
 import BannerMaster from './components/admin/banners/Master.vue'
 
+import Config from './components/admin/config/Edit.vue'
+
 const routes = [
     {
         path: '/admin',
@@ -72,6 +74,11 @@ const routes = [
         path: '/admin/banner-master/:id?',
         name: 'BannerMaster',
         component: BannerMaster
+    },
+    {
+        path: '/admin/config',
+        name: 'Config',
+        component: Config
     },
 ];
 

@@ -13,17 +13,15 @@ class ConfigController extends Controller
         return Config::find(1);
     }
 
-    public function update()
+    public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
             'title' => 'required',
             'logo' => 'required',
         ]);
 
-        $config = Config::find($id);
+        $config = Config::find(1);
         
-        $config->name = $request->name;
         $config->title = $request->title;
         $config->logo = $request->logo;
 
