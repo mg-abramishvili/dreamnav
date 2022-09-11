@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('kiosks', function (Blueprint $table) {
             $table->id();
+            $table->integer('scheme_id');
             $table->string('name');
-            $table->string('x');
-            $table->string('y');
+            $table->integer('x');
+            $table->integer('y');
         });
     }
 

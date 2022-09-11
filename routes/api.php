@@ -14,6 +14,13 @@ Route::delete('admin/page/{id}/delete', [App\Http\Controllers\Admin\PageControll
 Route::post('admin/blocks', [App\Http\Controllers\Admin\BlockController::class, 'store']);
 Route::put('admin/block/{id}/update', [App\Http\Controllers\Admin\BlockController::class, 'update']);
 
+// ADMIN KIOSKS
+Route::get('admin/kiosks', [App\Http\Controllers\Admin\KioskController::class, 'index']);
+Route::post('admin/kiosks', [App\Http\Controllers\Admin\KioskController::class, 'store']);
+Route::get('admin/kiosk/{id}', [App\Http\Controllers\Admin\KioskController::class, 'kiosk']);
+Route::put('admin/kiosk/{id}/update', [App\Http\Controllers\Admin\KioskController::class, 'update']);
+Route::delete('admin/kiosk/{id}/delete', [App\Http\Controllers\Admin\KioskController::class, 'delete']);
+
 // ADMIN SCHEMES
 Route::get('admin/schemes', [App\Http\Controllers\Admin\SchemeController::class, 'index']);
 Route::post('admin/schemes', [App\Http\Controllers\Admin\SchemeController::class, 'store']);

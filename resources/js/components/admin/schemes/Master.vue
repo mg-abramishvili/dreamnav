@@ -120,6 +120,10 @@ export default {
         if(this.$route.params.id) {
             this.loadScheme()
         }
+
+        if(!this.$route.params.id) {
+            this.views.loading = false
+        }
     },
     methods: {
         loadScheme() {
