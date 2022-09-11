@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// ADMIN CONFIGS
+Route::get('admin/config', [App\Http\Controllers\Admin\ConfigController::class, 'index']);
+Route::put('admin/config-update', [App\Http\Controllers\Admin\ConfigController::class, 'update']);
+
 // ADMIN PAGES
 Route::get('admin/pages', [App\Http\Controllers\Admin\PageController::class, 'index']);
 Route::post('admin/pages', [App\Http\Controllers\Admin\PageController::class, 'store']);
