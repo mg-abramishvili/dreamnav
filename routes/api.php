@@ -35,6 +35,13 @@ Route::get('admin/point/{id}', [App\Http\Controllers\Admin\PointController::clas
 Route::put('admin/point/{id}/update', [App\Http\Controllers\Admin\PointController::class, 'update']);
 Route::delete('admin/point/{id}/delete', [App\Http\Controllers\Admin\PointController::class, 'delete']);
 
+// ADMIN BANNERS
+Route::get('admin/banners', [App\Http\Controllers\Admin\BannerController::class, 'index']);
+Route::post('admin/banners', [App\Http\Controllers\Admin\BannerController::class, 'store']);
+Route::get('admin/banner/{id}', [App\Http\Controllers\Admin\BannerController::class, 'banner']);
+Route::put('admin/banner/{id}/update', [App\Http\Controllers\Admin\BannerController::class, 'update']);
+Route::delete('admin/banner/{id}/delete', [App\Http\Controllers\Admin\BannerController::class, 'delete']);
+
 // ADMIN FILE UPLOAD
 Route::post('admin/file/upload', [App\Http\Controllers\Admin\FileController::class, 'store']);
 

@@ -12,7 +12,9 @@ return new class extends Migration
             $table->id();
             $table->integer('page_id')->nullable();
             $table->integer('point_id')->nullable();
+            $table->integer('event_id')->nullable();
             $table->string('name');
+            $table->string('type');
             $table->string('content');
             $table->timestamps();
         });

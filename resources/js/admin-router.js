@@ -14,6 +14,9 @@ import SchemeMaster from './components/admin/schemes/Master.vue'
 import Points from './components/admin/points/Index.vue'
 import PointMaster from './components/admin/points/Master.vue'
 
+import Banners from './components/admin/banners/Index.vue'
+import BannerMaster from './components/admin/banners/Master.vue'
+
 const routes = [
     {
         path: '/admin',
@@ -59,6 +62,16 @@ const routes = [
         path: '/admin/point-master/:id?',
         name: 'PointMaster',
         component: PointMaster
+    },
+    {
+        path: '/admin/banners',
+        name: 'Banners',
+        component: Banners
+    },
+    {
+        path: '/admin/banner-master/:id?',
+        name: 'BannerMaster',
+        component: BannerMaster
     },
 ];
 
