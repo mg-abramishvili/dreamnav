@@ -10,7 +10,9 @@ return new class extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->id();
+            $table->integer('scheme_id');
             $table->string('name');
+            $table->string('object');
             $table->timestamps();
         });
     }

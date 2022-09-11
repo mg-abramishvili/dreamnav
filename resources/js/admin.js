@@ -7,4 +7,8 @@ import App from './components/admin/App.vue'
 
 import Loader from './components/admin/Loader.vue'
 
-createApp(App).component('Loader', Loader).use(router).mount('#app')
+// SweetAlerts
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+createApp(App).component('Loader', Loader).use(router).use(VueSweetalert2).mount('#app')

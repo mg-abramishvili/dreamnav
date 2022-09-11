@@ -34,8 +34,10 @@
                 </select>
             </div>
 
-            <div @click="createPoint($event)" class="point-drawing-area">
-                <img :src="selected.scheme.image" alt="">
+            <div class="mb-4 border">
+                <div @click="createPoint($event)" class="point-drawing-area">
+                    <img :src="selected.scheme.image" alt="">
+                </div>
             </div>
 
             <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary">Сохранить</button>
@@ -51,7 +53,7 @@ export default {
             point: {},
 
             name: '',
-            points: [],
+            object: [],
 
             schemes: [],
 
@@ -87,31 +89,39 @@ export default {
                 this.point = response.data
 
                 this.name = response.data.name
-
-                if(response.data.image) {
-                    this.filepond_image_edit = [
-                        {
-                            source: response.data.image,
-                            options: {
-                                type: 'local',
-                            }
-                        }
-                    ]
-                }
+                this.selected.scheme = this.schemes.find(scheme => scheme.id == response.data.scheme_id)
+                this.object = response.data.object
 
                 this.views.loading = false
+
+                setTimeout(() => {
+                    this.renderObject()
+                }, 1000)
             })
         },
         createPoint(event) {
+            if(!this.selected.scheme) {
+                return this.$swal({
+                    text: 'Сначала выберите схему',
+                    icon: 'error',
+                })
+            }
+
             let map = document.getElementsByClassName('point-drawing-area')[0]
+            
             let x = event.pageX - map.offsetLeft
             let y = event.pageY - map.offsetTop
 
-            if(this.points.length) {
-                this.points.push(x + ' ' + y)
+            if(this.object.length) {
+                this.object.push(x + ' ' + y)
             } else {
-                this.points.push(x + ' ' + y, (x + 1) + ' ' + (y + 1))
+                this.object.push(x + ' ' + y, (x + 1) + ' ' + (y + 1))
             }
+
+            this.renderObject()
+        },
+        renderObject() {
+            let map = document.getElementsByClassName('point-drawing-area')[0]
 
             let svgs = map.getElementsByTagName("svg")
             for (var i = 0; i < svgs.length; i++) {
@@ -122,18 +132,38 @@ export default {
             let svg = document.createElementNS(xmlns, "svg")
             let polygon = document.createElementNS(xmlns, "polygon")
 
-            polygon.setAttribute("points", this.points.join())
+            polygon.setAttribute("points", this.object.join())
             polygon.setAttribute("style", "fill:lime;stroke:purple;stroke-width:1")
             svg.appendChild(polygon)
             map.appendChild(svg)
         },
         save() {
+            if(!this.name) {
+                return this.$swal({
+                    text: 'Укажите название',
+                    icon: 'error',
+                })
+            }
+            if(!this.selected.scheme) {
+                return this.$swal({
+                    text: 'Выберите схему',
+                    icon: 'error',
+                })
+            }
+            if(!this.object.length) {
+                return this.$swal({
+                    text: 'Нарисуйте объект на карте',
+                    icon: 'error',
+                })
+            }
+
             this.views.saveButton = false
 
             if(this.$route.params.id) {
                 axios.put(`/api/admin/point/${this.$route.params.id}/update`, {
                     name: this.name,
-                    image: this.image
+                    scheme_id: this.selected.scheme.id,
+                    object: this.object
                 })
                 .then(response => {
                     this.views.saveButton = true
@@ -153,7 +183,8 @@ export default {
             if(!this.$route.params.id) {
                 axios.post(`/api/admin/points`, {
                     name: this.name,
-                    image: this.image
+                    scheme_id: this.selected.scheme.id,
+                    object: this.object
                 })
                 .then(response => {
                     this.views.saveButton = true
