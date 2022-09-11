@@ -1,0 +1,10 @@
+.wrapper {
+    position: relative;
+    width: 100vw;
+    max-width: 100vh;
+    max-height: 177.77vw;
+    height: 177.78vw;
+    overflow: hidden;
+    margin: 0 auto;
+    background-color: #CACACA;
+}
