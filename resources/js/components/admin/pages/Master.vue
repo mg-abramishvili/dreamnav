@@ -16,7 +16,7 @@
                 </template>
             </h1>
         </div>
-
+{{blocks}}
         <div class="content p-4">
             <div class="page-editor">
                 <div class="toolbox">
@@ -46,7 +46,22 @@
                 </div>
 
                 <div class="page-area">
-                    <ul>
+                    <draggable
+                        :list="blocks"
+                        :disabled="false"
+                        item-key="id"
+                        ghost-class="ghost"
+                        :move="checkMove" >
+
+                        <template #item="{ element }">
+                            <div v-if="element.type == 'text'" class="block-area">
+                                <div @click="editBlock(element)" v-html="element.content"></div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
+                        </template>
+                    </draggable>
+
+                    <!-- <ul>
                         <li v-for="block in blocks">
                             <div v-if="block.type == 'text'" class="block-area">
                                 <div @click="editBlock(block)" v-html="block.content"></div>
@@ -65,7 +80,7 @@
 
                             <template v-if="block.type == 'iframe'">iFrame</template>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
@@ -76,6 +91,8 @@
 </template>
 
 <script>
+import draggable from "vuedraggable"
+
 import BlockMaster from './blocks/Master.vue'
 
 export default {
@@ -98,6 +115,25 @@ export default {
             }
         }
     },
+    watch: {
+        blocks: {
+            handler() {
+                setTimeout(() => {
+                    this.blocks = this.blocks.map(function(block, index) {
+                        {
+                            return {
+                                id: block.id,
+                                type: block.type,
+                                content: block.content,
+                                order: index
+                            } 
+                        }
+                    })
+                }, 1000)
+            },
+            deep: true,
+        }
+    },
     created() {
         if(this.$route.params.id) {
             this.loadPage()
@@ -114,10 +150,16 @@ export default {
             })
         },
         addBlock(blockType) {
+            let content = ''
+
+            if(blockType == 'text') {
+                content = "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+            }
+
             let newBlock = {
                 id: 'temp_' + blockType + '_' + Math.floor((Math.random()*100) + 1) + '_' + Math.floor((Math.random()*100) + 1),
                 type: blockType,
-                content: "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>",
+                content: content,
                 order: 99
             }
 
@@ -128,9 +170,13 @@ export default {
         },
         editBlock(block) {
             this.selected.block = block
+        },
+        checkMove: function(e) {
+            console.log(e)
         }
     },
     components: {
+        draggable,
         BlockMaster
     }
 }

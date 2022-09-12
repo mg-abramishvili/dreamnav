@@ -185,11 +185,15 @@ body {
     position: relative;
     border: 2px solid #ddd;
     border-radius: 6px;
+    margin: 25px 0;
 }
 .block-area:hover,
 .block-area:focus {
     border-color: #2470dc;
     cursor: pointer;
+}
+.block-area.ghost {
+    background-color: rgba(254, 133, 133, 0.85);
 }
 .block-area .btn {
     position: absolute;
