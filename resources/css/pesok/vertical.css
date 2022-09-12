@@ -8,3 +8,41 @@
     margin: 0 auto;
     background-color: #CACACA;
 }
+
+/* HOME */
+.banners {
+    height: 30vh;
+    position: relative;
+}
+.banner-home-slider {
+    position: relative;
+    height: 100%;
+}
+.banner-home-slide {
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+.home-main {
+    height: 70vh;
+    display: flex;
+}
+.sidebar {
+    width: 35vw;
+    background-color: #172119;
+    color: #fff;
+    padding: 2.5vh;
+    text-align: center;
+}
+.sidebar .logo img {
+    width: 100%;
+}
+.sidebar .logo p {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 3vh;
+}
+.menu {
+    width: 65vw;
+}
+/* HOME */

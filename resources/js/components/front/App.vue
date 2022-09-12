@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <PesokTheme
-            v-if="theme == 'pesok'"
+            v-if="config.theme == 'pesok'"
             ref="pesok" />
     </div>
 </template>
@@ -12,19 +12,20 @@
     export default {
         data() {
             return {
-                settings: {},
-
-                theme: 'pesok'
+                config: {
+                    theme: 'pesok',
+                    orientation: 'vertical',
+                },
             }
         },
         created() {
-            // this.loadSettings()
+            this.loadConfig()
         },
         methods: {
-            loadSettings() {
-                axios.get(`/api/settings`)
+            loadConfig() {
+                axios.get(`/api/config`)
                 .then(response => {
-                    this.settings = response.data
+                    this.config = response.data
                     
                 })
             },

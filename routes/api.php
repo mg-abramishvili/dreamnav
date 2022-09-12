@@ -3,7 +3,18 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// ADMIN CONFIGS
+// FRONT CONFIG
+Route::get('config', [App\Http\Controllers\ConfigController::class, 'index']);
+
+// FRONT BANNERS
+Route::get('banners', [App\Http\Controllers\BannerController::class, 'index']);
+
+// FRONT PAGES
+Route::get('pages', [App\Http\Controllers\PageController::class, 'index']);
+
+
+
+// ADMIN CONFIG
 Route::get('admin/config', [App\Http\Controllers\Admin\ConfigController::class, 'index']);
 Route::put('admin/config-update', [App\Http\Controllers\Admin\ConfigController::class, 'update']);
 

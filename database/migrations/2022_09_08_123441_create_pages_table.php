@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('parent_id')->nullable();
             $table->integer('language_id')->default(1);
-            $table->integer('order');
+            $table->integer('order')->default(999);
             $table->timestamps();
         });
     }
