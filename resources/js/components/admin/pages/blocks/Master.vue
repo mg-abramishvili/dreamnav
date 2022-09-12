@@ -6,13 +6,8 @@
                     <h5 class="modal-title">Редактирование блока</h5>
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
-                <div class="modal-body">
-                    <TextMaster v-if="block.type == 'text'" :block="block" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Сохранить</button>
-                    <button @click="cancel()" type="button" class="btn btn-outline-secondary">Отмена</button>
-                </div>
+                
+                <TextMaster v-if="block.type == 'text'" :block="block" />
             </div>
         </div>
     </div>
@@ -32,7 +27,12 @@ export default {
         //
     },
     methods: {
-        cancel() {
+        save(content) {
+            this.$parent.blocks.find(block => block.id == this.block.id).content = content
+
+            this.closeModal()
+        },
+        closeModal() {
             this.$parent.selected.block = ''
         },
     },
