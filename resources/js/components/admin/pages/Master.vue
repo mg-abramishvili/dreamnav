@@ -97,8 +97,8 @@
 
                             <div v-else-if="element.type == 'excel'" class="block-area">
                                 <div @click="editBlock(element)">
-                                    <template v-if="element.content" >
-                                        <div v-if="XlsxTable(element.content)" v-html="XlsxTable(element.content)"></div>
+                                    <template v-if="element.content">
+                                        <div :id="XlsxTable(element)"></div>
                                     </template>
                                     <img v-else src="/img/excel-placeholder.png" alt="">
                                 </div>
@@ -205,19 +205,16 @@ export default {
         checkMove: function(e) {
             console.log(e)
         },
-        XlsxTable(content) {
-            fetch(content)
+        XlsxTable(element) {
+            axios.get(element.content, { responseType: 'arraybuffer' })
             .then(response => {
-                console.log(read(response.arrayBuffer()))
+                let wb = read(response.data)
+                
+                document.getElementById(element.id).innerHTML = utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]], { header: '', footer: '' })
             })
+
+            return element.id
         },
-        // async XlsxTable(content) {
-        //     let f = await (await fetch(content)).arrayBuffer()
-        //     let wb = read(f)
-        //     let table = utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]], { header: '', footer: '' })
-            
-        //     console.log(table)
-        // },
         save() {
             if(!this.name) {
                 return this.$swal({
