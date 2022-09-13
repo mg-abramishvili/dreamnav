@@ -29,6 +29,13 @@ export default {
     },
     methods: {
         save() {
+            if(!this.content) {
+                return this.$swal({
+                    text: 'Напишите текст',
+                    icon: 'error',
+                })
+            }
+
             this.$parent.save(this.content)
         },
         cancel() {

@@ -98,6 +98,13 @@ export default {
                 this.content = document.getElementsByName("block_pdf")[0].value
             }
 
+            if(!this.content) {
+                return this.$swal({
+                    text: 'Загрузите PDF-файл',
+                    icon: 'error',
+                })
+            }
+
             this.$parent.save(this.content)
         },
         cancel() {

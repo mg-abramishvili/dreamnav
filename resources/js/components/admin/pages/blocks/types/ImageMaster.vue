@@ -98,6 +98,13 @@ export default {
                 this.content = document.getElementsByName("block_image")[0].value
             }
 
+            if(!this.content) {
+                return this.$swal({
+                    text: 'Загрузите изображение',
+                    icon: 'error',
+                })
+            }
+
             this.$parent.save(this.content)
         },
         cancel() {
