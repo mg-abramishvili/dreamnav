@@ -83,6 +83,17 @@
                                 </div>
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
+
+                            <div v-else-if="element.type == 'pdf'" class="block-area">
+                                <div @click="editBlock(element)">
+                                    <template v-if="element.content" >
+                                        <iframe :src="'/pdfjs/web/viewer-admin.html?file=' + element.content" height="100%" width="100%" style="border: none;"></iframe>
+                                        <div class="iframe-overlay"></div>
+                                    </template>
+                                    <img v-else src="/img/pdf-placeholder.png" alt="">
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
                         </template>
                     </draggable>
                 </div>
