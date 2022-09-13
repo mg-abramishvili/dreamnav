@@ -213,7 +213,8 @@ body {
 .block-area p:last-child {
     margin-bottom: 0;
 }
-.block-area img {
+.block-area img,
+.block-area video {
     width: auto;
     display: block;
     margin: 0 auto;

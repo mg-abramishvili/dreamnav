@@ -78,5 +78,20 @@ class FileController extends Controller
                 'Content-Disposition' => 'inline',
             ]);
         }
+
+        if (request()->file('block_video')) {
+            $file = request()->file('block_video');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/page_block_videos')) {
+                mkdir(public_path() . '/uploads/page_block_videos', 0755, true);
+            }
+
+            $file->move(public_path() . '/uploads/page_block_videos', $filename);
+
+            return \Response::make('/uploads/page_block_videos/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
     }
 }

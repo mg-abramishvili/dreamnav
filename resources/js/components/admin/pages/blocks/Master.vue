@@ -10,6 +10,8 @@
                 <TextMaster v-if="block.type == 'text'" :block="block" />
                 
                 <ImageMaster v-if="block.type == 'image'" :block="block" />
+                
+                <VideoMaster v-if="block.type == 'video'" :block="block" />
             </div>
         </div>
     </div>
@@ -18,6 +20,7 @@
 <script>
 import TextMaster from './types/TextMaster.vue'
 import ImageMaster from './types/ImageMaster.vue'
+import VideoMaster from './types/VideoMaster.vue'
 
 export default {
     props: ['block'],
@@ -41,7 +44,8 @@ export default {
     },
     components: {
         TextMaster,
-        ImageMaster
+        ImageMaster,
+        VideoMaster,
     }
 }
 </script>
