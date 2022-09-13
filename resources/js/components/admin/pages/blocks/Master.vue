@@ -8,6 +8,8 @@
                 </div>
                 
                 <TextMaster v-if="block.type == 'text'" :block="block" />
+                
+                <ImageMaster v-if="block.type == 'image'" :block="block" />
             </div>
         </div>
     </div>
@@ -15,6 +17,7 @@
 
 <script>
 import TextMaster from './types/TextMaster.vue'
+import ImageMaster from './types/ImageMaster.vue'
 
 export default {
     props: ['block'],
@@ -37,7 +40,8 @@ export default {
         },
     },
     components: {
-        TextMaster
+        TextMaster,
+        ImageMaster
     }
 }
 </script>

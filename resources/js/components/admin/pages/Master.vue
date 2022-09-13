@@ -16,7 +16,9 @@
                 </template>
             </h1>
         </div>
-{{blocks}}
+
+        <pre>{{blocks}}</pre>
+
         <div class="content p-4">
             <div class="page-editor">
                 <div class="toolbox">
@@ -25,10 +27,10 @@
                             <button @click="addBlock('text')" class="btn btn-outline-primary">+ Текст</button>
                         </li>
                         <li>
-                            <button @click="addBlock('picture')" class="btn btn-outline-primary">+ Изображение</button>
+                            <button @click="addBlock('image')" class="btn btn-outline-primary">+ Изображение</button>
                         </li>
                         <li>
-                            <button @click="addBlock('picture_slider')" class="btn btn-outline-primary">+ Слайдер с изображениями</button>
+                            <button @click="addBlock('image_slider')" class="btn btn-outline-primary">+ Слайдер с изображениями</button>
                         </li>
                         <li>
                             <button @click="addBlock('video')" class="btn btn-outline-primary">+ Видеоролик</button>
@@ -58,29 +60,16 @@
                                 <div @click="editBlock(element)" v-html="element.content"></div>
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
+
+                            <div v-else-if="element.type == 'image'" class="block-area">
+                                <div @click="editBlock(element)">
+                                    <img v-if="element.content" :src="element.content" alt="">
+                                    <img v-else src="/img/image-placeholder.png" alt="">
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
                         </template>
                     </draggable>
-
-                    <!-- <ul>
-                        <li v-for="block in blocks">
-                            <div v-if="block.type == 'text'" class="block-area">
-                                <div @click="editBlock(block)" v-html="block.content"></div>
-                                <button @click="removeBlock(block.id)" class="btn btn-secondary">&times;</button>
-                            </div>
-
-                            <template v-if="block.type == 'picture'">Изображение</template>
-
-                            <template v-if="block.type == 'picture_slider'">Слайдер с изображениями</template>
-                            
-                            <template v-if="block.type == 'video'">Видеоролик</template>
-
-                            <template v-if="block.type == 'pdf'">PDF-файл</template>
-
-                            <template v-if="block.type == 'excel'">Excel-файл</template>
-
-                            <template v-if="block.type == 'iframe'">iFrame</template>
-                        </li>
-                    </ul> -->
                 </div>
             </div>
         </div>

@@ -60,5 +60,23 @@ class FileController extends Controller
                 'Content-Disposition' => 'inline',
             ]);
         }
+
+        if (request()->file('block_image')) {
+            $file = request()->file('block_image');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/page_block_images')) {
+                mkdir(public_path() . '/uploads/page_block_images', 0755, true);
+            }
+
+            $img = Image::make($file->path());
+            $img->resize(2000, 2000, function ($const) {
+                $const->aspectRatio();
+            })->save(public_path() . '/uploads/page_block_images/' . $filename);
+
+            return \Response::make('/uploads/page_block_images/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
     }
 }

@@ -213,6 +213,12 @@ body {
 .block-area p:last-child {
     margin-bottom: 0;
 }
+.block-area img {
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
 
 .filepond--root .filepond--credits[style] {
     display: none !important;
