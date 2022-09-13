@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
+            $table->integer('page_id');
             $table->string('type');
             $table->text('content');
             $table->integer('order');

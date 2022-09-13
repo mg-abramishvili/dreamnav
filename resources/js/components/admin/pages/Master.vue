@@ -17,9 +17,14 @@
             </h1>
         </div>
 
-        <pre>{{blocks}}</pre>
+        <!-- <pre>{{blocks}}</pre> -->
 
         <div class="content p-4">
+            <div class="mb-4">
+                <label class="form-label">Название страницы</label>
+                <input v-model="name" type="text" class="form-control">
+            </div>
+
             <div class="page-editor">
                 <div class="toolbox">
                     <ul>
@@ -72,6 +77,8 @@
                     </draggable>
                 </div>
             </div>
+
+            <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary mt-4">Сохранить</button>
         </div>
 
         <BlockMaster v-if="selected.block" :block="selected.block" />
@@ -101,6 +108,7 @@ export default {
 
             views: {
                 loading: true,
+                saveButton: true,
             }
         }
     },
@@ -133,6 +141,8 @@ export default {
             axios.get(`/api/admin/page/${this.$route.params.id}`)
             .then(response => {
                 this.page = response.data
+
+                this.name = response.data.name
                 this.blocks = response.data.blocks
 
                 this.views.loading = false
@@ -162,7 +172,63 @@ export default {
         },
         checkMove: function(e) {
             console.log(e)
-        }
+        },
+        save() {
+            if(!this.name) {
+                return this.$swal({
+                    text: 'Укажите название',
+                    icon: 'error',
+                })
+            }
+            if(!this.blocks.length) {
+                return this.$swal({
+                    text: 'Страница не может быть пуста, добавить блоки с контентом',
+                    icon: 'error',
+                })
+            }
+
+            this.views.saveButton = false
+
+            if(this.$route.params.id) {
+                axios.put(`/api/admin/page/${this.$route.params.id}/update`, {
+                    name: this.name,
+                    blocks: this.blocks,
+                })
+                .then(response => {
+                    this.views.saveButton = true
+    
+                    this.$router.push({ name: 'Pages' })
+                })
+                .catch(errors => {
+                    this.views.saveButton = true
+                    
+                    return this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
+                })
+            }
+
+            if(!this.$route.params.id) {
+                axios.post(`/api/admin/pages`, {
+                    name: this.name,
+                    blocks: this.blocks,
+                })
+                .then(response => {
+                    this.views.saveButton = true
+    
+                    this.$router.push({ name: 'Pages' })
+                })
+                .catch(errors => {
+                    this.views.saveButton = true
+                    
+                    return this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
+                })
+            }
+        },
     },
     components: {
         draggable,

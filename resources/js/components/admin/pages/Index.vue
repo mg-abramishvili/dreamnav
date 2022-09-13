@@ -15,7 +15,9 @@
                     <tr v-for="page in pages">
                         <td>{{ page.name }}</td>
                         <td>{{ page.created_at }}</td>
-                        <td><button class="btn btn-outline-primary">Правка</button></td>
+                        <td class="text-end">
+                            <router-link :to="{ name: 'PageMaster', params: {id: page.id} }" class="btn btn-outline-primary">Правка</router-link>
+                        </td>
                     </tr>
                 </tbody>
             </table>
