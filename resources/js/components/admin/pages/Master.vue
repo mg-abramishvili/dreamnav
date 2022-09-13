@@ -94,6 +94,22 @@
                                 </div>
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
+
+                            <div v-else-if="element.type == 'excel'" class="block-area">
+                                <div @click="editBlock(element)">
+                                    <template v-if="element.content" >
+                                        <xlsx-read :file="element.content">
+                                            <template #default="{collection}">
+                                                <div>
+                                                {{ collection }}
+                                                </div>
+                                            </template>
+                                        </xlsx-read>
+                                    </template>
+                                    <img v-else src="/img/excel-placeholder.png" alt="">
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
                         </template>
                     </draggable>
                 </div>
@@ -109,6 +125,7 @@
 
 <script>
 import draggable from "vuedraggable"
+import { XlsxRead } from "vue3-xlsx"
 
 import BlockMaster from './blocks/Master.vue'
 
@@ -253,7 +270,8 @@ export default {
     },
     components: {
         draggable,
-        BlockMaster
+        BlockMaster,
+        XlsxRead,
     }
 }
 </script>

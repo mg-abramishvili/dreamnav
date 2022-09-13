@@ -108,5 +108,20 @@ class FileController extends Controller
                 'Content-Disposition' => 'inline',
             ]);
         }
+
+        if (request()->file('block_excel')) {
+            $file = request()->file('block_excel');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/page_block_excels')) {
+                mkdir(public_path() . '/uploads/page_block_excels', 0755, true);
+            }
+
+            $file->move(public_path() . '/uploads/page_block_excels', $filename);
+
+            return \Response::make('/uploads/page_block_excels/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
     }
 }
