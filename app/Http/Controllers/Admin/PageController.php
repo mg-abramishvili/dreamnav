@@ -16,7 +16,11 @@ class PageController extends Controller
 
     public function page($id)
     {
-        return Page::with('blocks')->find($id);
+        return Page::query()
+            ->with(['blocks' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->find($id);
     }
 
     public function store(Request $request)
@@ -27,6 +31,36 @@ class PageController extends Controller
         ]);
 
         $page = new Page();
+        
+        $page->name = $request->name;
+
+        $page->save();
+
+        foreach($request->blocks as $b)
+        {
+            $block = Block::find($b['id']);
+
+            if(!$block) {
+                $block = new Block();
+            }
+
+            $block->page_id = $page->id;
+            $block->type = $b['type'];
+            $block->content = $b['content'];
+            $block->order = $b['order'];
+
+            $block->save();
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'blocks' => 'required',
+        ]);
+
+        $page = Page::find($id);
         
         $page->name = $request->name;
 

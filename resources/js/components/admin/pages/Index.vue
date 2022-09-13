@@ -10,11 +10,11 @@
         </div>
 
         <div v-if="!views.loading" class="content p-4">
-            <table v-if="pages.length" class="table">
+            <table v-if="pages.length" class="table align-middle">
                 <tbody>
                     <tr v-for="page in pages">
-                        <td>{{ page.name }}</td>
-                        <td>{{ page.created_at }}</td>
+                        <td class="w-50">{{ page.name }}</td>
+                        <td>{{ $filters.datetime(page.updated_at) }}</td>
                         <td class="text-end">
                             <router-link :to="{ name: 'PageMaster', params: {id: page.id} }" class="btn btn-outline-primary">Правка</router-link>
                         </td>

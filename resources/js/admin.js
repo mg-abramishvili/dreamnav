@@ -11,4 +11,17 @@ import Loader from './components/admin/Loader.vue'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-createApp(App).component('Loader', Loader).use(router).use(VueSweetalert2).mount('#app')
+import moment from 'moment'
+
+const app = createApp(App).component('Loader', Loader).use(router).use(VueSweetalert2)
+
+app.config.globalProperties.$filters = {
+    datetime(date) {
+        return moment.utc(date).utcOffset(3).format('DD.MM.YYYY H:mm')
+    },
+    date(date) {
+        return moment.utc(date).utcOffset(3).format('DD.MM.YYYY')
+    },
+}
+
+app.mount('#app')
