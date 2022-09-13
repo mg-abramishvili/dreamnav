@@ -98,7 +98,7 @@
                             <div v-else-if="element.type == 'excel'" class="block-area">
                                 <div @click="editBlock(element)">
                                     <template v-if="element.content" >
-                                        //
+                                        <div v-if="XlsxTable(element.content)" v-html="XlsxTable(element.content)"></div>
                                     </template>
                                     <img v-else src="/img/excel-placeholder.png" alt="">
                                 </div>
@@ -119,6 +119,7 @@
 
 <script>
 import draggable from "vuedraggable"
+import { read, utils } from 'xlsx'
 
 import BlockMaster from './blocks/Master.vue'
 
@@ -204,6 +205,19 @@ export default {
         checkMove: function(e) {
             console.log(e)
         },
+        XlsxTable(content) {
+            fetch(content)
+            .then(response => {
+                console.log(read(response.arrayBuffer()))
+            })
+        },
+        // async XlsxTable(content) {
+        //     let f = await (await fetch(content)).arrayBuffer()
+        //     let wb = read(f)
+        //     let table = utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]], { header: '', footer: '' })
+            
+        //     console.log(table)
+        // },
         save() {
             if(!this.name) {
                 return this.$swal({
