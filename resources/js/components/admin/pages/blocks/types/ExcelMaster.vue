@@ -100,7 +100,7 @@ export default {
 
             if(!this.content) {
                 return this.$swal({
-                    text: 'Загрузите изображение',
+                    text: 'Загрузите XLSX-файл',
                     icon: 'error',
                 })
             }
