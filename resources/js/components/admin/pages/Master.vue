@@ -98,7 +98,8 @@
                             <div v-else-if="element.type == 'excel'" class="block-area">
                                 <div @click="editBlock(element)">
                                     <template v-if="element.content">
-                                        <div :id="XlsxTable(element)"></div>
+                                        <div :id="XlsxTable(element)" style="text-align: center;"></div>
+                                        <div class="table-overlay"></div>
                                     </template>
                                     <img v-else src="/img/excel-placeholder.png" alt="">
                                 </div>
@@ -210,7 +211,11 @@ export default {
             .then(response => {
                 let wb = read(response.data)
                 
-                document.getElementById(element.id).innerHTML = utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]], { header: '', footer: '' })
+                let div = document.getElementById(element.id)
+
+                if(!div.innerHTML) {
+                    document.getElementById(element.id).innerHTML = utils.sheet_to_html(wb.Sheets[wb.SheetNames[0]], { header: '', footer: '' })
+                }
             })
 
             return element.id
