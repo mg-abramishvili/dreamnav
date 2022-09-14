@@ -51,4 +51,11 @@ class BannerController extends Controller
 
         $banner->save();
     }
+
+    public function delete($id)
+    {
+        $banner = Banner::find($id);
+
+        $banner->delete();
+    }
 }

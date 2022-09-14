@@ -29,6 +29,10 @@
                 </div>
             </template>
         </div>
+
+        <div class="footer page-footer">
+            <button @click="goHome()">На главную</button>
+        </div>
     </div>
 </template>
 
@@ -64,6 +68,9 @@ export default {
             })
 
             return block.id
+        },
+        goHome() {
+            this.$router.push({ name: 'Home', params: { kiosk: this.$route.params.kiosk } })
         },
     },
 }

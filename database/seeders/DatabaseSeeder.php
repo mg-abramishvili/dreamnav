@@ -10,6 +10,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ConfigSeeder::class,
+            PageSeeder::class,
+            BlockSeeder::class,
+            BannerSeeder::class,
         ]);
     }
 }

@@ -262,6 +262,12 @@ body {
 .filepond--root .filepond--credits[style] {
     display: none !important;
 }
+.filepond--image-preview {
+    background: #f1f0ef;
+}
+.filepond--image-preview-overlay-success {
+    color: rgb(54 151 99 / 50%);
+}
 
 .point-drawing-area {
     width: 1024px;

@@ -1,16 +1,16 @@
 <template>
     <div class="home">
         <div class="banners">
-            <swiper
+            <swiper v-if="banners.length"
                 :modules="modules"
                 :slides-per-view="1"
                 :space-between="0"
-                :loop="true"
-                :autoplay="true"
+                :loop="swiperConfig('loop')"
+                :autoplay="swiperConfig('autoplay')"
                 :autoplayDelay="5000"
                 :autoplayDisableOnInteraction="false"
+                :allow-touch-move="swiperConfig('allowTouchMove')"
                 @swiper="onSwiper"
-                @slideChange="onSlideChange"
                 class="banner-home-slider">
                 
                 <swiper-slide v-for="(banner, index) in banners">
@@ -55,19 +55,21 @@ export default {
         }
     },
     setup() {
-        const onSwiper = (swiper) => {
-            console.log(swiper)
-        }
-        const onSlideChange = () => {
-            console.log('slide change')
-        }
         return {
-            onSwiper,
-            onSlideChange,
             modules: [Autoplay],
         }
     },
     methods: {
+        onSwiper(swiper) {
+            this.swiper = swiper
+        },
+        swiperConfig(param) {
+            if(this.banners.length > 1) {
+                return true
+            } else {
+                return false
+            }
+        },
         goToPage(id) {
             this.$parent.goToPage(id)
         },

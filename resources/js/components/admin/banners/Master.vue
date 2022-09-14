@@ -63,6 +63,7 @@
             </div>
 
             <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary">Сохранить</button>
+            <button @click="del()" class="btn btn-outline-danger ms-2">Удалить</button>
         </div>
 
     </div>
@@ -243,7 +244,21 @@ export default {
                     })
                 })
             }
-        }
+        },
+        del() {
+            if(confirm('Точно удалить баннер?')) {
+                axios.delete(`/api/admin/banner/${this.$route.params.id}/delete`)
+                .then(response => {
+                    this.$router.push({ name: 'Banners' })
+                })
+                .catch(errors => {
+                    return this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
+                })
+            }
+        },
     },
     components: {
         FilePond

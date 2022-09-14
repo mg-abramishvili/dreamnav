@@ -51,7 +51,7 @@
 
 /* PAGE */
 .page-header {
-    height: 5vh;
+    height: 7vh;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -63,7 +63,7 @@
     margin: 0;
 }
 .page-content {
-    height: 95vh;
+    height: 86vh;
     overflow-y: auto;
     position: relative;
     padding: 0 2vh;
@@ -74,6 +74,14 @@
 .page-block:nth-of-type(1) {
     margin-top: 0;
 }
+.page-block-text p {
+    margin-top: 0;
+    margin-bottom: 2vh;
+    font-size: 1.5vh;
+}
+.page-block-text p:last-child {
+    margin-bottom: 0;
+}
 .page-block-image img {
     width: auto;
     max-width: 100%;
@@ -81,3 +89,11 @@
     margin: 0 auto;
 }
 /* PAGE */
+
+.footer {
+    height: 7vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
