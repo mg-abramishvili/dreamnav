@@ -9,6 +9,15 @@ class PageController extends Controller
 {
     public function index()
     {
-        return Page::orderBy('order', 'desc')->get();
+        return Page::orderBy('order', 'asc')->get();
+    }
+
+    public function page($id)
+    {
+        return Page::query()
+            ->with(['blocks' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->find($id);
     }
 }

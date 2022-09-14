@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h1>Routes {{ $route.params.id }}</h1>
+        <h1>Routes {{ $route.params.kiosk }}</h1>
     </div>
 </template>

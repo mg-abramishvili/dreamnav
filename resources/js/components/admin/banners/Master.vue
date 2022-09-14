@@ -28,7 +28,7 @@
             </div>
 
             <div class="mb-4">
-                <select v-model="selected.type" class="form-control">
+                <select v-model="selected.type" class="form-select" disabled>
                     <option value="image">Изображение</option>
                     <option value="video">Видео</option>
                 </select>

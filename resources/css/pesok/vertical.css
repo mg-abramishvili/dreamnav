@@ -46,3 +46,38 @@
     width: 65vw;
 }
 /* HOME */
+
+
+
+/* PAGE */
+.page-header {
+    height: 5vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-header h1 {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+}
+.page-content {
+    height: 95vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 0 2vh;
+}
+.page-block {
+    margin: 2vh 0;
+}
+.page-block:nth-of-type(1) {
+    margin-top: 0;
+}
+.page-block-image img {
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+/* PAGE */

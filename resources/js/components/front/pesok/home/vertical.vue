@@ -29,7 +29,9 @@
             <div class="menu">
                 <ul>
                     <li v-for="page in pages">
-                        {{ page.name }}
+                        <router-link :to="{ name: 'Page', params: {id: page.id} }">
+                            {{ page.name }}
+                        </router-link>
                     </li>
                 </ul>
             </div>

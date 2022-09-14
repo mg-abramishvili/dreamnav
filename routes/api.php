@@ -11,6 +11,7 @@ Route::get('banners', [App\Http\Controllers\BannerController::class, 'index']);
 
 // FRONT PAGES
 Route::get('pages', [App\Http\Controllers\PageController::class, 'index']);
+Route::get('page/{id}', [App\Http\Controllers\PageController::class, 'page']);
 
 
 
