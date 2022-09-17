@@ -61,6 +61,39 @@ class FileController extends Controller
             ]);
         }
 
+        if (request()->file('screensaver_image')) {
+            $file = request()->file('screensaver_image');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/screensavers')) {
+                mkdir(public_path() . '/uploads/screensavers', 0755, true);
+            }
+
+            $img = Image::make($file->path());
+            $img->resize(2000, 2000, function ($const) {
+                $const->aspectRatio();
+            })->save(public_path() . '/uploads/screensavers/' . $filename);
+
+            return \Response::make('/uploads/screensavers/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
+
+        if (request()->file('screensaver_video')) {
+            $file = request()->file('screensaver_video');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/screensavers')) {
+                mkdir(public_path() . '/uploads/screensavers', 0755, true);
+            }
+
+            $file->move(public_path() . '/uploads/screensavers', $filename);
+
+            return \Response::make('/uploads/screensavers/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
+
         if (request()->file('block_image')) {
             $file = request()->file('block_image');
             $filename = time().'.'.$file->extension();

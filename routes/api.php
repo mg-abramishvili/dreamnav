@@ -58,6 +58,13 @@ Route::get('admin/banner/{id}', [App\Http\Controllers\Admin\BannerController::cl
 Route::put('admin/banner/{id}/update', [App\Http\Controllers\Admin\BannerController::class, 'update']);
 Route::delete('admin/banner/{id}/delete', [App\Http\Controllers\Admin\BannerController::class, 'delete']);
 
+// ADMIN SCREENSAVERS
+Route::get('admin/screensavers', [App\Http\Controllers\Admin\ScreensaverController::class, 'index']);
+Route::post('admin/screensavers', [App\Http\Controllers\Admin\ScreensaverController::class, 'store']);
+Route::get('admin/screensaver/{id}', [App\Http\Controllers\Admin\ScreensaverController::class, 'screensaver']);
+Route::put('admin/screensaver/{id}/update', [App\Http\Controllers\Admin\ScreensaverController::class, 'update']);
+Route::delete('admin/screensaver/{id}/delete', [App\Http\Controllers\Admin\ScreensaverController::class, 'delete']);
+
 // ADMIN ICONS
 Route::get('admin/icons', [App\Http\Controllers\Admin\IconController::class, 'index']);
 Route::post('admin/icons', [App\Http\Controllers\Admin\IconController::class, 'store']);

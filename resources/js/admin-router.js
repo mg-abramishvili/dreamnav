@@ -17,6 +17,9 @@ import PointMaster from './components/admin/points/Master.vue'
 import Banners from './components/admin/banners/Index.vue'
 import BannerMaster from './components/admin/banners/Master.vue'
 
+import Screensavers from './components/admin/screensavers/Index.vue'
+import ScreensaverMaster from './components/admin/screensavers/Master.vue'
+
 import Config from './components/admin/config/Edit.vue'
 
 const routes = [
@@ -74,6 +77,16 @@ const routes = [
         path: '/admin/banner-master/:id?',
         name: 'BannerMaster',
         component: BannerMaster
+    },
+    {
+        path: '/admin/screensavers',
+        name: 'Screensavers',
+        component: Screensavers
+    },
+    {
+        path: '/admin/screensaver-master/:id?',
+        name: 'ScreensaverMaster',
+        component: ScreensaverMaster
     },
     {
         path: '/admin/config',
