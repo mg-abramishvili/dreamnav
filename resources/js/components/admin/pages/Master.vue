@@ -17,6 +17,9 @@
             </h1>
         </div>
 
+        <button @click="views.icons = true" class="btn btn-outline-secondary">icon</button>
+        <Icons v-if="views.icons"/>
+
         <!-- <pre>{{blocks}}</pre> -->
 
         <div class="content p-4">
@@ -114,7 +117,7 @@
         </div>
 
         <BlockMaster v-if="selected.block" :block="selected.block" />
-        <div v-if="selected.block" class="modal-backdrop fade show"></div>
+        <div v-if="selected.block || views.icons" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
@@ -123,6 +126,7 @@ import draggable from "vuedraggable"
 import { read, utils } from 'xlsx'
 
 import BlockMaster from './blocks/Master.vue'
+import Icons from './icons/Index.vue'
 
 export default {
     data() {
@@ -142,6 +146,7 @@ export default {
             views: {
                 loading: true,
                 saveButton: true,
+                icons: false,
             }
         }
     },
@@ -280,6 +285,7 @@ export default {
     components: {
         draggable,
         BlockMaster,
+        Icons,
     }
 }
 </script>
