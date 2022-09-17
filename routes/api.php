@@ -58,6 +58,11 @@ Route::get('admin/banner/{id}', [App\Http\Controllers\Admin\BannerController::cl
 Route::put('admin/banner/{id}/update', [App\Http\Controllers\Admin\BannerController::class, 'update']);
 Route::delete('admin/banner/{id}/delete', [App\Http\Controllers\Admin\BannerController::class, 'delete']);
 
+// ADMIN ICONS
+Route::get('admin/icons', [App\Http\Controllers\Admin\IconController::class, 'index']);
+Route::post('admin/icons', [App\Http\Controllers\Admin\IconController::class, 'store']);
+Route::delete('admin/icon/{id}/delete', [App\Http\Controllers\Admin\IconController::class, 'delete']);
+
 // ADMIN FILE UPLOAD
 Route::post('admin/file/upload', [App\Http\Controllers\Admin\FileController::class, 'store']);
 

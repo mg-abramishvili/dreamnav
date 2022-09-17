@@ -14,6 +14,7 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->integer('language_id')->default(1);
             $table->integer('order')->default(999);
+            $table->integer('icon_id')->nullable();
             $table->timestamps();
         });
     }
