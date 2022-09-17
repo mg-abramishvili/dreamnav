@@ -19,6 +19,7 @@
 
                 screensaver: {
                     timeoutID: '',
+                    timer: 3000,
                     slides: [],
                 },
             }
@@ -47,7 +48,7 @@
                 window.addEventListener("scroll", this.ScreensaverResetTimer)
             },
             ScreensaverStartTimer() {
-                this.screensaver.timeoutID = window.setTimeout(this.ScreensaverGoInactive, 2000)
+                this.screensaver.timeoutID = window.setTimeout(this.ScreensaverGoInactive, this.screensaver.timer)
             },
             ScreensaverResetTimer() {
                 window.clearTimeout(this.screensaver.timeoutID)
