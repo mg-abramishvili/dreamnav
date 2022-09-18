@@ -44,7 +44,7 @@ export default {
     },
     methods: {
         loadRoutes() {
-            axios.get('/api/admin/routes')
+            axios.get(`/api/admin/routes/${this.$route.params.kiosk}`)
             .then(response => {
                 this.routes = response.data
 

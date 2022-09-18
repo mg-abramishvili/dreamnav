@@ -10,6 +10,8 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
+            $table->integer('kiosk_id');
+            $table->integer('point_id');
             $table->integer('scheme1_id');
             $table->integer('scheme2_id')->nullable();
             $table->string('floor1_text_begin')->nullable();

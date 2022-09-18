@@ -51,6 +51,13 @@ Route::get('admin/point/{id}', [App\Http\Controllers\Admin\PointController::clas
 Route::put('admin/point/{id}/update', [App\Http\Controllers\Admin\PointController::class, 'update']);
 Route::delete('admin/point/{id}/delete', [App\Http\Controllers\Admin\PointController::class, 'delete']);
 
+// ADMIN ROUTES
+Route::get('admin/routes/{kiosk}', [App\Http\Controllers\Admin\RouteController::class, 'index']);
+Route::post('admin/routes', [App\Http\Controllers\Admin\RouteController::class, 'store']);
+Route::get('admin/route/{id}', [App\Http\Controllers\Admin\RouteController::class, 'route']);
+Route::put('admin/route/{id}/update', [App\Http\Controllers\Admin\RouteController::class, 'update']);
+Route::delete('admin/route/{id}/delete', [App\Http\Controllers\Admin\RouteController::class, 'delete']);
+
 // ADMIN BANNERS
 Route::get('admin/banners', [App\Http\Controllers\Admin\BannerController::class, 'index']);
 Route::post('admin/banners', [App\Http\Controllers\Admin\BannerController::class, 'store']);

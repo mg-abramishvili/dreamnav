@@ -292,3 +292,57 @@ body {
 .point-drawing-area img {
     width: 100%;
 }
+
+/* ROUTES */
+.key-anim01,
+.key-anim02,
+.key-anim03,
+.key-anim04,
+.key-anim05,
+.key-anim06,
+.key-anim07,
+.key-anim08,
+.key-anim09,
+.key-anim10,
+.key-anim11,
+.key-anim12,
+.key-anim13,
+.key-anim14,
+.key-anim15 {
+    stroke-dasharray: 10;
+    stroke-dashoffset: -2000;
+    animation: Drawpath 20s linear infinite;
+}
+
+@keyframes Drawpath {
+    from {
+        stroke-dashoffset: -2000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.wrapper-map,
+.wrapper-map2 {
+    width: 800px;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.map-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+    display: block;
+    background-color: red;
+    position: absolute;
+    z-index: 1;
+}
+/* ROUTES */

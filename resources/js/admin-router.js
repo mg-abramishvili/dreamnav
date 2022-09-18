@@ -14,6 +14,9 @@ import SchemeMaster from './components/admin/schemes/Master.vue'
 import Points from './components/admin/points/Index.vue'
 import PointMaster from './components/admin/points/Master.vue'
 
+import Routes from './components/admin/routes/Index.vue'
+import RouteMaster from './components/admin/routes/Master.vue'
+
 import Banners from './components/admin/banners/Index.vue'
 import BannerMaster from './components/admin/banners/Master.vue'
 
@@ -67,6 +70,16 @@ const routes = [
         path: '/admin/point-master/:id?',
         name: 'PointMaster',
         component: PointMaster
+    },
+    {
+        path: '/admin/routes/:kiosk',
+        name: 'Routes',
+        component: Routes
+    },
+    {
+        path: '/admin/route-master/:id?',
+        name: 'RouteMaster',
+        component: RouteMaster
     },
     {
         path: '/admin/banners',
