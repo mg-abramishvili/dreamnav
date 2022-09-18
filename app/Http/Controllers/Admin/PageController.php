@@ -33,6 +33,7 @@ class PageController extends Controller
         $page = new Page();
         
         $page->name = $request->name;
+        $page->icon_id = $request->icon_id;
 
         $page->save();
 
@@ -63,6 +64,7 @@ class PageController extends Controller
         $page = Page::find($id);
         
         $page->name = $request->name;
+        $page->icon_id = $request->icon_id;
 
         $page->save();
 

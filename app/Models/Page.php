@@ -13,4 +13,9 @@ class Page extends Model
     {
         return $this->hasMany(Block::class);
     }
+
+    public function icon()
+    {
+        return $this->belongsTo(Icon::class);
+    }
 }

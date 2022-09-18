@@ -29,8 +29,13 @@
                 <input v-model="name" type="text" class="form-control">
             </div>
 
-            <button @click="views.icons = true" class="btn btn-outline-secondary">icon</button>
-            <Icons v-if="views.icons"/>
+            <div class="mb-4">
+                <label class="form-label d-block">Иконка страницы</label>
+                <img v-if="selected.icon" @click="views.icons = true" :src="selected.icon.image" alt="" style="width: auto; height: auto; max-width: 500px; max-height: 100px; border-radius: 5px">
+                <button v-else @click="views.icons = true" class="btn btn-outline-secondary">Задать</button>
+                
+                <Icons v-if="views.icons" :icons="icons" />
+            </div>            
 
             <div class="page-editor">
                 <div class="toolbox">
@@ -147,14 +152,16 @@ export default {
         return {
             page: {},
 
+            icons: [],
             blocks: [],
 
             name: '',
-            parent_id: '',
-            language_id: '',
 
             selected: {
                 block: '',
+                icon: '',
+                parent: '',
+                language: '',
             },
 
             views: {
@@ -184,6 +191,8 @@ export default {
         }
     },
     created() {
+        this.loadIcons()
+
         if(this.$route.params.id) {
             this.loadPage()
         } else {
@@ -191,6 +200,12 @@ export default {
         }
     },
     methods: {
+        loadIcons() {
+            axios.get('/api/admin/icons')
+            .then(response => {
+                this.icons = response.data
+            })
+        },
         loadPage() {
             axios.get(`/api/admin/page/${this.$route.params.id}`)
             .then(response => {
@@ -198,6 +213,7 @@ export default {
 
                 this.name = response.data.name
                 this.blocks = response.data.blocks
+                this.selected.icon = this.icons.find(icon => icon.id == response.data.icon_id)
 
                 this.views.loading = false
             })
@@ -279,6 +295,7 @@ export default {
                 axios.put(`/api/admin/page/${this.$route.params.id}/update`, {
                     name: this.name,
                     blocks: this.blocks,
+                    icon_id: this.selected.icon.id
                 })
                 .then(response => {
                     this.views.saveButton = true
@@ -299,6 +316,7 @@ export default {
                 axios.post(`/api/admin/pages`, {
                     name: this.name,
                     blocks: this.blocks,
+                    icon_id: this.selected.icon.id
                 })
                 .then(response => {
                     this.views.saveButton = true

@@ -156,5 +156,23 @@ class FileController extends Controller
                 'Content-Disposition' => 'inline',
             ]);
         }
+
+        if (request()->file('icon_image')) {
+            $file = request()->file('icon_image');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/icons')) {
+                mkdir(public_path() . '/uploads/icons', 0755, true);
+            }
+
+            $img = Image::make($file->path());
+            $img->resize(1000, 1000, function ($const) {
+                $const->aspectRatio();
+            })->save(public_path() . '/uploads/icons/' . $filename);
+
+            return \Response::make('/uploads/icons/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
     }
 }
