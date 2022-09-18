@@ -40,6 +40,10 @@ export default {
                         video.load()
                     }
                 }
+
+                if(block.type == 'routes') {
+                    this.$refs.pesok.$refs.routes[0].resetRoutes()
+                }
             })
 
             this.$router.push({ name: 'Home', params: { kiosk: this.$route.params.kiosk } })

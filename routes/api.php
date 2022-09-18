@@ -13,7 +13,12 @@ Route::get('banners', [App\Http\Controllers\BannerController::class, 'index']);
 Route::get('pages', [App\Http\Controllers\PageController::class, 'index']);
 Route::get('page/{id}', [App\Http\Controllers\PageController::class, 'page']);
 
+// FRONT SCHEMES
+Route::get('schemes', [App\Http\Controllers\SchemeController::class, 'index']);
 
+// FRONT ROUTES
+Route::get('routes/{kiosk}', [App\Http\Controllers\RouteController::class, 'index']);
+Route::get('route/{id}', [App\Http\Controllers\RouteController::class, 'route']);
 
 // ADMIN CONFIG
 Route::get('admin/config', [App\Http\Controllers\Admin\ConfigController::class, 'index']);

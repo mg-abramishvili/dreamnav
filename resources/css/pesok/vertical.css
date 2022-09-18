@@ -58,6 +58,53 @@
 .menu {
     width: 65vw;
 }
+.menu ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.menu-item {
+    position: relative;
+    height: 12vh;
+}
+.menu-item-image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.menu-item-image:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.6);
+}
+.menu-item span {
+    position: absolute;
+    left: 1vh;
+    right: 1vh;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 3.5vh;
+    color: #fff;
+    text-transform: uppercase;
+    z-index: 5;
+    font-family: 'Cimero Pro';
+}
 /* HOME */
 
 
@@ -109,4 +156,194 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* ROUTES */
+.key-anim01,
+.key-anim02,
+.key-anim03,
+.key-anim04,
+.key-anim05,
+.key-anim06,
+.key-anim07,
+.key-anim08,
+.key-anim09,
+.key-anim10,
+.key-anim11,
+.key-anim12 {
+    stroke-dasharray: 10;
+    stroke-dashoffset: -2000;
+    animation: Drawpath 20s linear infinite;
+}
+
+@keyframes Drawpath {
+    from {
+        stroke-dashoffset: -2000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.map {
+    width: 800px;
+    position: relative;
+    /* background-color: #fff; */
+    border-radius: 1vh;
+    /* border: 0.2vh solid #c5d0db; */
+    overflow: hidden;
+    margin-bottom: 2vh;
+}
+/* .map1080 {
+    transform: scale(1.45);
+    transform-origin: 0 0;
+}
+.map4K {
+    transform: scale(2.95);
+    transform-origin: 0 0;
+} */
+.map1080 img,
+.map4k img {
+    width: 800px;
+    height: auto;
+}
+.map-path {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.routes-list ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 1vh;
+    height: 25vh;
+    overflow-y: auto;
+    columns: 2;
+}
+.routes-list ul li {
+    margin-bottom: 1vh;
+}
+.routes-list ul li:last-child {
+    margin-bottom: 0;
+}
+.routes-list ul li a {
+    display: block;
+    padding: 0.5vh 2vh;
+    font-size: 2vh;
+    border: 0;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 0.5vh;
+}
+
+.route-about {
+    background-color: #fff;
+    border-radius: 1vh;
+    border: 0.2vh solid #c5d0db;
+    padding: 1.5vh 2vh;
+    font-size: 2.5vh;
+    font-weight: 700;
+}
+
+.search-panel {
+    background-color: rgba(69, 146, 201,0.9);
+    padding: 2vh 40vh;
+    position: absolute;
+    top: auto;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    margin: 0 auto;
+    height: calc(100vh - 15vh);
+    bottom: 0;
+}
+.search-panel-close-button {
+    position: absolute;
+    right: 5vh;
+    top: 2vh;
+    box-shadow: none;
+    border: 0;
+    font-size: 10vh;
+    font-weight: 100;
+    color: #fff;
+    line-height: 1;
+    background: none;
+}
+.search-panel input {
+    font-size: 2.5vh;
+    border: 0.1vh solid #ccc;
+    padding: 2vh;
+    width: 100%;
+    margin-bottom: 2vh;
+    border-radius: 1vh;
+}
+.search-panel ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background-color: rgba(255,255,255,0.5);
+    padding: 2vh;
+    margin-bottom: 2vh;
+    height: 40vh;
+    border-radius: 1vh;
+    overflow-y: auto;
+}
+.search-panel ul li {
+    margin-bottom: 2vh;
+}
+.search-panel ul li:last-child {
+    margin-bottom: 0;
+}
+.search-panel ul li a {
+    display: block;
+    font-size: 2.5vh;
+    background-color: rgba(255,255,255,0.8);
+    padding: 1vh 2vh;
+    border-radius: 1vh;
+    text-align: center;
+}
+.search-panel .kb {
+    padding: 2vh;
+    background-color: #fff;
+    border-radius: 1vh;
+}
+
+.search-panel .hg-theme-default .hg-button {
+    height: 4vh;
+}
+
+.keyboard {
+    margin-top: 0.5vh;
+    margin-bottom: 3vh;
+}
+.keyboard button {
+    width: 4.2vh;
+    height: 4.2vh;
+    line-height: 4.2vh;
+    margin-bottom: 0.5vh;
+    background-color: #fff;
+    font-size: 1.5vh;
+    text-align: center;
+    padding: 0;
+    border: 0.1vh solid;
+}
+.keyboard .globebutton {
+    width: 7vh;
+}
+.keyboard .spacebutton {
+    width: 10vh;
+}
+/* ROUTES */
+
+@font-face {
+    font-family: 'Cimero Pro';
+    src: url('../fonts/cimeropro-webfont.woff2') format('woff2'),
+         url('../fonts/cimeropro-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }

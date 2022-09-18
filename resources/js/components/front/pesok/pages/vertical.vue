@@ -27,6 +27,10 @@
                 <div v-else-if="block.type == 'excel'" class="page-block page-block-excel">
                     <div :id="XlsxTable(block)" style="text-align: center;"></div>
                 </div>
+
+                <div v-else-if="block.type == 'routes'">
+                    <Routes ref="routes" />
+                </div>
             </template>
         </div>
 
@@ -38,6 +42,7 @@
 
 <script>
 import { read, utils } from 'xlsx'
+import Routes from '../../_comps/Routes.vue'
 
 export default {
     props: ['page'],
@@ -65,5 +70,8 @@ export default {
             this.$parent.goHome(this.page)
         },
     },
+    components: {
+        Routes
+    }
 }
 </script>

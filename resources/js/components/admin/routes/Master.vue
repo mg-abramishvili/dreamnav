@@ -16,8 +16,12 @@
                 </template>
             </h1>
         </div>
+{{route_code_floor1}}
+        <div v-if="views.loading" class="p-4">
+            <Loader />
+        </div>
 
-        <div class="content p-4">
+        <div v-if="!views.loading" class="content p-4">
             <div class="row">
                 <div class="col-12 col-lg">
                     <div class="mb-4">
@@ -48,11 +52,12 @@
                     <button @click="undoDotFloor1" class="btn btn-sm btn-outline-danger">&larr;</button>
                 </div>
 
-                <div id="wrapper-map" class="wrapper-map mb-4" @click="clickOnMapScheme1" v-bind:style="{ 'background-image': 'url(' + selected.scheme1.image + ')' }">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="map-path" class="map-path" viewBox="0 0 800 450"></svg>
+                <div id="wrapper-map" class="wrapper-map mb-4" @click="clickOnMapScheme1">
+                    <img :src="selected.scheme1.image" alt="">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="map-path" class="map-path"></svg>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-6">
                         <label for="form-label">Текст к первой точке</label>
                         <input v-model="floor1_text_begin" type="text" class="form-control">
@@ -61,7 +66,7 @@
                         <label for="form-label">Текст к последней точке</label>
                         <input v-model="floor1_text_end" type="text" class="form-control">
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="mb-4">
@@ -74,11 +79,12 @@
                     <button @click="undoDotFloor2" class="btn btn-sm btn-outline-danger">&larr;</button>
                 </div>
 
-                <div id="wrapper-map2" class="wrapper-map mb-4" @click="clickOnMapScheme2" v-bind:style="{ 'background-image': 'url(' + selected.scheme2.image + ')' }">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="map-path2" class="map-path" viewBox="0 0 800 450"></svg>
+                <div id="wrapper-map2" class="wrapper-map mb-4" @click="clickOnMapScheme2">
+                    <img :src="selected.scheme2.image" alt="">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="map-path2" class="map-path"></svg>
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-6">
                         <label for="form-label">Текст к первой точке</label>
                         <input v-model="floor2_text_begin" type="text" class="form-control">
@@ -87,7 +93,7 @@
                         <label for="form-label">Текст к последней точке</label>
                         <input v-model="floor2_text_end" type="text" class="form-control">
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <button @click="save()" class="btn btn-primary">Сохранить</button>
@@ -100,6 +106,8 @@
         data() {
             return {
                 schemes: [],
+                kiosks: [],
+                points: [],
 
                 selected: {
                     kiosk: '',
@@ -115,6 +123,10 @@
                 floor1_text_end: '',
                 floor2_text_begin: '',
                 floor2_text_end: '',
+
+                views: {
+                    loading: true,
+                }
             }
         },
         created() {

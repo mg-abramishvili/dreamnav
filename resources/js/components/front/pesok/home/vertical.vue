@@ -28,8 +28,9 @@
             </div>
             <div class="menu">
                 <ul>
-                    <li v-for="page in pages">
-                        <span @click="goToPage(page)">{{ page.name }}</span>
+                    <li @click="goToPage(page)" v-for="page in pages" class="menu-item">
+                        <div v-if="page.icon" class="menu-item-image" v-bind:style="{ 'background-image': 'url(' + page.icon.image + ')' }"></div>
+                        <span>{{ page.name }}</span>
                     </li>
                 </ul>
             </div>
