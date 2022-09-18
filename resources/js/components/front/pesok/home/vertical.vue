@@ -29,9 +29,7 @@
             <div class="menu">
                 <ul>
                     <li v-for="page in pages">
-                        <router-link :to="{ name: 'Page', params: {id: page.id} }">
-                            {{ page.name }}
-                        </router-link>
+                        <span @click="goToPage(page)">{{ page.name }}</span>
                     </li>
                 </ul>
             </div>
@@ -70,11 +68,8 @@ export default {
                 return false
             }
         },
-        goToPage(id) {
-            this.$parent.goToPage(id)
-        },
-        slideToZero() {
-            //
+        goToPage(page) {
+            this.$parent.goToPage(page)
         },
     },
     components: {

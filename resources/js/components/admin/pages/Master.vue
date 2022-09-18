@@ -17,16 +17,20 @@
             </h1>
         </div>
 
-        <button @click="views.icons = true" class="btn btn-outline-secondary">icon</button>
-        <Icons v-if="views.icons"/>
-
         <!-- <pre>{{blocks}}</pre> -->
 
-        <div class="content p-4">
+        <div v-if="views.loading" class="p-4">
+            <Loader />
+        </div>
+
+        <div v-if="!views.loading" class="content p-4">
             <div class="mb-4">
                 <label class="form-label">Название страницы</label>
                 <input v-model="name" type="text" class="form-control">
             </div>
+
+            <button @click="views.icons = true" class="btn btn-outline-secondary">icon</button>
+            <Icons v-if="views.icons"/>
 
             <div class="page-editor">
                 <div class="toolbox">
@@ -35,13 +39,13 @@
                             <button @click="addBlock('text')" class="btn btn-outline-primary">+ Текст</button>
                         </li>
                         <li>
-                            <button @click="addBlock('image')" class="btn btn-outline-primary">+ Изображение</button>
+                            <button @click="addBlock('image')" class="btn btn-outline-primary">+ Картинка</button>
                         </li>
                         <li>
-                            <button @click="addBlock('image_slider')" class="btn btn-outline-primary">+ Слайдер с изображениями</button>
+                            <button @click="addBlock('image_slider')" class="btn btn-outline-primary">+ Фотослайдер</button>
                         </li>
                         <li>
-                            <button @click="addBlock('video')" class="btn btn-outline-primary">+ Видеоролик</button>
+                            <button @click="addBlock('video')" class="btn btn-outline-primary">+ Видео</button>
                         </li>
                         <li>
                             <button @click="addBlock('pdf')" class="btn btn-outline-primary">+ PDF-файл</button>
@@ -51,6 +55,9 @@
                         </li>
                         <li>
                             <button @click="addBlock('iframe')" class="btn btn-outline-primary">+ iFrame</button>
+                        </li>
+                        <li>
+                            <button @click="addBlock('routes')" class="btn btn-outline-primary">+ Маршруты</button>
                         </li>
                     </ul>
                 </div>
@@ -105,6 +112,13 @@
                                         <div class="table-overlay"></div>
                                     </template>
                                     <img v-else src="/img/excel-placeholder.png" alt="">
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
+
+                            <div v-else-if="element.type == 'routes'" class="block-area">
+                                <div>
+                                    <p class="m-0">Блок Маршруты</p>
                                 </div>
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
@@ -172,6 +186,8 @@ export default {
     created() {
         if(this.$route.params.id) {
             this.loadPage()
+        } else {
+            this.views.loading = false
         }
     },
     methods: {
@@ -193,11 +209,29 @@ export default {
                 content = "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
             }
 
+            if(blockType == 'routes') {
+                if(this.blocks.length) {
+                    return this.$swal({
+                        text: 'Блок Маршруты нельзя совмещать с другими блоками',
+                        icon: 'error',
+                    })
+                }
+
+                content = "routes"
+            }
+
             let newBlock = {
                 id: 'temp_' + blockType + '_' + Math.floor((Math.random()*100) + 1) + '_' + Math.floor((Math.random()*100) + 1),
                 type: blockType,
                 content: content,
                 order: 99
+            }
+
+            if(this.blocks.find(block => block.type == 'routes')) {
+                return this.$swal({
+                    text: 'Блок Маршруты нельзя совмещать с другими блоками',
+                    icon: 'error',
+                })
             }
 
             this.blocks.push(newBlock)

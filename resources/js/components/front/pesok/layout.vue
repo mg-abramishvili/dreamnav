@@ -2,7 +2,7 @@
     <div class="pesok-layout">
         <router-view v-slot="{ Component }">
             <keep-alive>
-                <component :is="Component" />
+                <component :is="Component" :key="$route.path" />
             </keep-alive>
         </router-view>
     </div>

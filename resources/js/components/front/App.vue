@@ -27,9 +27,6 @@
         created() {
             this.loadConfig()
         },
-        mounted() {
-            
-        },
         methods: {
             loadConfig() {
                 axios.get(`/api/config`)
@@ -70,9 +67,9 @@
             }
             document.addEventListener('keydown', this._keyListener.bind(this))
 
-            this.initScreensaver()
+            // this.initScreensaver()
 
-            this.ScreensaverStartTimer()
+            // this.ScreensaverStartTimer()
         },
         beforeMount() {
             // document.oncontextmenu = new Function("return false")

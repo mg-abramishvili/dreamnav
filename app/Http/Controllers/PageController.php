@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function index()
     {
-        return Page::orderBy('order', 'asc')->get();
+        return Page::orderBy('order', 'asc')->with('blocks')->get();
     }
 
     public function page($id)
