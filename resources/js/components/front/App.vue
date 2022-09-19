@@ -3,12 +3,20 @@
         <PesokTheme
             v-if="config.theme == 'pesok'"
             ref="pesok" />
+
+        <div v-if="screensaver.isActive && screensaver.slides.length" class="screensaver">
+            <div @click="closeScreensaver()" class="screensaver-inner">
+                <Screensaver ref="screensaver" :slides="screensaver.slides" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import PesokTheme from './pesok/layout.vue'
 
+    import Screensaver from './_comps/Screensaver.vue'
+    
     export default {
         data() {
             return {
@@ -18,6 +26,7 @@
                 },
 
                 screensaver: {
+                    isActive: true,
                     timeoutID: '',
                     timer: 3000,
                     slides: [],
@@ -26,12 +35,20 @@
         },
         created() {
             this.loadConfig()
+            this.loadScreensaverSlides()
         },
         methods: {
             loadConfig() {
                 axios.get(`/api/config`)
                 .then(response => {
                     this.config = response.data
+                    
+                })
+            },
+            loadScreensaverSlides() {
+                axios.get(`/api/screensavers`)
+                .then(response => {
+                    this.screensaver.slides = response.data
                     
                 })
             },
@@ -53,7 +70,16 @@
                 this.ScreensaverStartTimer()
             },
             ScreensaverGoInactive() {
-                alert('Wake up Neo')
+                this.screensaver.isActive = true
+
+                this.ScreensaverResetTimer()
+            },
+            closeScreensaver() {
+                if(this.$refs.screensaver) {
+                    this.$refs.screensaver.stopSlide()
+                }
+
+                this.screensaver.isActive = false
 
                 this.ScreensaverResetTimer()
             },
@@ -67,15 +93,20 @@
             }
             document.addEventListener('keydown', this._keyListener.bind(this))
 
-            // this.initScreensaver()
+            this.initScreensaver()
 
-            // this.ScreensaverStartTimer()
+            this.ScreensaverStartTimer()
         },
         beforeMount() {
             // document.oncontextmenu = new Function("return false")
         },
         components: {
             PesokTheme,
+            Screensaver
         }
     }
 </script>
+
+<style>
+@import "../../../css/screensaver.css"
+</style>
