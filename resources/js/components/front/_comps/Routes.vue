@@ -13,6 +13,8 @@
                     </template>
                     <circle v-if="point.x" id="02" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
                 </template>
+
+                <polygon v-for="point in points" :points="point.object.join()" style="fill:lime;stroke:purple;stroke-width:1"></polygon>
             </svg>
 
             <svg v-if="selected.slide === 2" class="map-path svg2">
@@ -99,7 +101,8 @@
         data() {
             return {
                 schemes: [],
-                routes: {},
+                routes: [],
+                points: [],
 
                 selected: {
                     slide: 1,
@@ -120,6 +123,7 @@
 
             this.loadSchemes()
             this.loadRoutes()
+            this.loadPoints()
         },
         computed: {
             filtered_routes: function () {
@@ -143,6 +147,12 @@
                 axios.get(`/api/routes/1`)
                 .then(response => {
                     this.routes = response.data
+                })
+            },
+            loadPoints() {
+                axios.get(`/api/points`)
+                .then(response => {
+                    this.points = response.data
                 })
             },
             SelectRoute(route) {

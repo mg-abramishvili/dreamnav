@@ -23,6 +23,9 @@ Route::get('schemes', [App\Http\Controllers\SchemeController::class, 'index']);
 Route::get('routes/{kiosk}', [App\Http\Controllers\RouteController::class, 'index']);
 Route::get('route/{id}', [App\Http\Controllers\RouteController::class, 'route']);
 
+// FRONT POINTS
+Route::get('points', [App\Http\Controllers\PointController::class, 'index']);
+
 // ADMIN CONFIG
 Route::get('admin/config', [App\Http\Controllers\Admin\ConfigController::class, 'index']);
 Route::put('admin/config-update', [App\Http\Controllers\Admin\ConfigController::class, 'update']);
