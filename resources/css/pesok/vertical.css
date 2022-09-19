@@ -197,14 +197,15 @@
     overflow: hidden;
     margin-bottom: 2vh;
 }
-/* .map1080 {
-    transform: scale(1.45);
+.map1080 {
+    transform: scale(1.25);
     transform-origin: 0 0;
+    margin-bottom: 12vh;
 }
 .map4K {
     transform: scale(2.95);
     transform-origin: 0 0;
-} */
+}
 .map1080 img,
 .map4k img {
     width: 800px;
