@@ -9,6 +9,6 @@ class PointController extends Controller
 {
     public function index()
     {
-        return Point::all();
+        return Point::with('routes')->get();
     }
 }

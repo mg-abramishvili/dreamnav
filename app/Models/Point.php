@@ -12,4 +12,14 @@ class Point extends Model
     protected $casts = [
         'object' => 'json',
     ];
+
+    public function scheme()
+    {
+        return $this->belongsTo(Scheme::class);
+    }
+
+    public function routes()
+    {
+        return $this->hasMany(Route::class);
+    }
 }
