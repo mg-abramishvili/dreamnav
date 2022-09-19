@@ -16,7 +16,7 @@
                 </template>
             </h1>
         </div>
-
+        
         <div v-if="views.loading" class="p-4">
             <Loader />
         </div>
@@ -34,9 +34,11 @@
                 </select>
             </div>
 
-            <div class="mb-4 border">
+            <div class="mb-4">
+                <button @click="undo()" class="btn btn-sm btn-outline-secondary">&larr;</button>
+
                 <div @click="createPoint($event)" class="point-drawing-area">
-                    <img :src="selected.scheme.image" alt="">
+                    <img :src="selected.scheme.image" alt="" class="border">
                 </div>
             </div>
 
@@ -136,6 +138,15 @@ export default {
             polygon.setAttribute("style", "fill:lime;stroke:purple;stroke-width:1")
             svg.appendChild(polygon)
             map.appendChild(svg)
+        },
+        undo() {
+            this.object.pop()
+
+            if(this.object.length == 1) {
+                this.object = []
+            }
+                
+            this.renderObject()
         },
         save() {
             if(!this.name) {

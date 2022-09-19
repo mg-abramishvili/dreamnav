@@ -8,7 +8,7 @@
                     </svg>
                 </router-link>
 
-                <template v-if="$route.params.id">
+                <template v-if="$route.params.id && route.kiosk && route.point">
                     {{ route.kiosk.name }} &rarr; {{ route.point.name }}
                 </template>
                 <template v-else>
@@ -16,7 +16,7 @@
                 </template>
             </h1>
         </div>
-{{route_code_floor1}}
+        
         <div v-if="views.loading" class="p-4">
             <Loader />
         </div>
@@ -52,7 +52,7 @@
                     <button @click="undoDotFloor1" class="btn btn-sm btn-outline-danger">&larr;</button>
                 </div>
 
-                <div id="wrapper-map" class="wrapper-map mb-4" @click="clickOnMapScheme1">
+                <div id="wrapper-map" class="wrapper-map mb-4" @click="clickOnMapScheme($event, 1)">
                     <img :src="selected.scheme1.image" alt="">
                     <svg xmlns="http://www.w3.org/2000/svg" id="map-path" class="map-path"></svg>
                 </div>
@@ -79,7 +79,7 @@
                     <button @click="undoDotFloor2" class="btn btn-sm btn-outline-danger">&larr;</button>
                 </div>
 
-                <div id="wrapper-map2" class="wrapper-map mb-4" @click="clickOnMapScheme2">
+                <div id="wrapper-map2" class="wrapper-map mb-4" @click="clickOnMapScheme($event, 2)">
                     <img :src="selected.scheme2.image" alt="">
                     <svg xmlns="http://www.w3.org/2000/svg" id="map-path2" class="map-path"></svg>
                 </div>
@@ -97,6 +97,7 @@
             </div>
 
             <button @click="save()" class="btn btn-primary">Сохранить</button>
+            <button @click="del()" class="btn btn-outline-danger ms-2">Удалить</button>
         </div>
     </div>
 </template>
@@ -108,6 +109,8 @@
                 schemes: [],
                 kiosks: [],
                 points: [],
+
+                route: '',
 
                 selected: {
                     kiosk: '',
@@ -133,14 +136,20 @@
             this.loadKiosks()
             this.loadPoints()
             this.loadSchemes()
+
+            if(this.$route.params.id) {
+                this.loadRoute()
+            }
+
+            if(!this.$route.params.id) {
+                this.views.loading = false
+            }
         },
         methods: {
             loadSchemes() {
                 axios.get('/api/admin/schemes')
                 .then(response => {
                     this.schemes = response.data
-
-                    this.views.loading = false
                 })
             },
             loadKiosks() {
@@ -155,79 +164,110 @@
                     this.points = response.data
                 })
             },
-            clickOnMapScheme1: function (event) {
-                let map = document.getElementById('wrapper-map')
-                let x = event.pageX - map.offsetLeft
-                let y = event.pageY - map.offsetTop
-                if(this.route_code_floor1 && this.route_code_floor1.length > 0) {
-                    let svgNS = "http://www.w3.org/2000/svg"
-                    let svg_item = document.createElementNS(svgNS,'svg')
-                    let path = document.createElementNS(svgNS,'path')
-                    path.setAttribute('class','key-anim01')
-                    path.setAttribute('fill','none')
-                    path.setAttribute('stroke-width', '3px')
-                    path.setAttribute('stroke','rgba(200,10,10,0.5)')
-                    path.setAttribute('d', `M${x} ${y}, ${this.route_code_floor1.slice(-1)[0].x} ${this.route_code_floor1.slice(-1)[0].y}`)
-                    let circle = document.createElementNS(svgNS,'circle')
-                    circle.setAttribute('fill','#f33')
-                    circle.setAttribute('cx', x)
-                    circle.setAttribute('cy', y)
-                    circle.setAttribute('r',4)
-                    
-                    svg_item.appendChild(path)
-                    svg_item.appendChild(circle)
-                    let svg = document.getElementById('map-path')
-                    svg.appendChild(svg_item)
-                } else {
-                    let svgNS = "http://www.w3.org/2000/svg"
-                    let svg_item = document.createElementNS(svgNS,'svg')
-                    let circle = document.createElementNS(svgNS,'circle')
-                    circle.setAttribute('fill','#f33')
-                    circle.setAttribute('cx', x)
-                    circle.setAttribute('cy', y)
-                    circle.setAttribute('r',4)
-                    svg_item.appendChild(circle)
-                    let svg = document.getElementById('map-path')
-                    svg.appendChild(svg_item)
-                }
-                this.route_code_floor1.push({x,y})
+            loadRoute() {
+                axios.get(`/api/admin/route/${this.$route.params.id}`)
+                .then(response => {
+                    this.route = response.data
+
+                    this.selected.kiosk = this.kiosks.find(k => k.id == response.data.kiosk_id)
+                    this.selected.point = this.points.find(p => p.id == response.data.point_id)
+                    this.selected.scheme1 = this.schemes.find(s => s.id == response.data.scheme1_id)
+
+                    if(response.data.scheme2_id) {
+                        this.selected.scheme2 = this.schemes.find(s => s.id == response.data.scheme2_id)
+                    }
+
+                    this.views.loading = false
+
+                    setTimeout(() => {
+                        response.data.route_code_floor1.forEach((i, index) => {
+                            setTimeout(() => {
+                                this.route_code_floor1.push(i)
+
+                                this.renderPath(i, 1)
+                            }, (index + 1) * 100)
+                        })
+
+                        if(response.data.route_code_floor2) {
+                            response.data.route_code_floor2.forEach((i, index) => {
+                                setTimeout(() => {
+                                    this.route_code_floor2.push(i)
+                                    
+                                    this.renderPath(i, 2)
+                                }, (index + 1) * 100)
+                            })
+                        }
+                    }, 500)
+                })
             },
-            clickOnMapScheme2: function (event) {
-                let map = document.getElementById('wrapper-map2')
+            clickOnMapScheme(event, mapID) {
+                let map
+
+                if(mapID == 1) {
+                    map = document.getElementById('wrapper-map')
+                }
+                if(mapID == 2) {
+                    map = document.getElementById('wrapper-map2')
+                }
+
                 let x = event.pageX - map.offsetLeft
                 let y = event.pageY - map.offsetTop
-                if(this.route_code_floor2 && this.route_code_floor2.length > 0) {
-                    let svgNS = "http://www.w3.org/2000/svg"
-                    let svg_item = document.createElementNS(svgNS,'svg')
-                    let path = document.createElementNS(svgNS,'path')
-                    path.setAttribute('class','key-anim01')
-                    path.setAttribute('fill','none')
-                    path.setAttribute('stroke-width', '3px')
-                    path.setAttribute('stroke','rgba(200,10,10,0.5)')
-                    path.setAttribute('d', `M${x} ${y}, ${this.route_code_floor2.slice(-1)[0].x} ${this.route_code_floor2.slice(-1)[0].y}`)
-                    let circle = document.createElementNS(svgNS,'circle')
-                    circle.setAttribute('fill','#f33')
-                    circle.setAttribute('cx', x)
-                    circle.setAttribute('cy', y)
-                    circle.setAttribute('r',4)
-                    
-                    svg_item.appendChild(path)
-                    svg_item.appendChild(circle)
-                    let svg = document.getElementById('map-path2')
-                    svg.appendChild(svg_item)
-                } else {
-                    let svgNS = "http://www.w3.org/2000/svg"
-                    let svg_item = document.createElementNS(svgNS,'svg')
-                    let circle = document.createElementNS(svgNS,'circle')
-                    circle.setAttribute('fill','#f33')
-                    circle.setAttribute('cx', x)
-                    circle.setAttribute('cy', y)
-                    circle.setAttribute('r',4)
-                    svg_item.appendChild(circle)
-                    let svg = document.getElementById('map-path2')
-                    svg.appendChild(svg_item)
+                
+                if(mapID == 1) {
+                    this.route_code_floor1.push({x,y})
                 }
-                this.route_code_floor2.push({x,y})
+                if(mapID == 2) {
+                    this.route_code_floor2.push({x,y})
+                }
+
+                this.renderPath({x,y}, mapID)
+            },
+            renderPath(obj, mapID) {
+                let routeCodeArray
+
+                if(mapID == 1) {
+                    routeCodeArray = this.route_code_floor1
+                }
+                if(mapID == 2) {
+                    routeCodeArray = this.route_code_floor2
+                }
+
+                let svgNS = "http://www.w3.org/2000/svg"
+                let svgItem = document.createElementNS(svgNS, 'svg')
+                let circle = document.createElementNS(svgNS, 'circle')
+
+                if(routeCodeArray.length > 1) {
+                    let path = document.createElementNS(svgNS,'path')
+
+                    path.setAttribute('class', 'key-anim01')
+                    path.setAttribute('fill', 'none')
+                    path.setAttribute('stroke-width', '3px')
+                    path.setAttribute('stroke', 'rgba(200,10,10,0.5)')
+
+                    path.setAttribute('d', `M${obj.x} ${obj.y}, ${routeCodeArray.slice(-2)[0].x} ${routeCodeArray.slice(-2)[0].y}`)
+
+                    circle.setAttribute('fill', '#f33')
+                    circle.setAttribute('cx', obj.x)
+                    circle.setAttribute('cy', obj.y)
+                    circle.setAttribute('r', 4)
+                    
+                    svgItem.appendChild(path)
+                    svgItem.appendChild(circle)
+                } else {
+                    circle.setAttribute('fill', '#f33')
+                    circle.setAttribute('cx', obj.x)
+                    circle.setAttribute('cy', obj.y)
+                    circle.setAttribute('r', 4)
+
+                    svgItem.appendChild(circle)
+                }
+
+                if(mapID == 1) {
+                    document.getElementById('map-path').appendChild(svgItem)
+                }
+                if(mapID == 2) {
+                    document.getElementById('map-path2').appendChild(svgItem)
+                }
             },
             undoDotFloor1() {
                 let select = document.getElementById('map-path')
@@ -260,25 +300,60 @@
                     })
                 }
 
-                axios.post(`/api/admin/routes`, {
-                    kiosk_id: this.selected.kiosk.id,
-                    point_id: this.selected.point.id,
-                    scheme1_id: this.selected.scheme1.id,
-                    scheme2_id: this.selected.scheme2.id,
-                    floor1_text_begin: this.floor1_text_begin,
-                    floor1_text_end: this.floor1_text_end,
-                    floor2_text_begin: this.floor2_text_begin,
-                    floor2_text_end: this.floor2_text_end,
-                    route_code_floor1: this.route_code_floor1,
-                    route_code_floor2: this.route_code_floor2
-                })
-                .then(response => (
-                    this.$router.push({name: 'Routes', params: {kiosk: 1} })
-                ))
-                .catch((error) => {
-                    //
-                })
-            }
+                if(this.$route.params.id) {
+                    axios.put(`/api/admin/route/${this.$route.params.id}/update`, {
+                        kiosk_id: this.selected.kiosk.id,
+                        point_id: this.selected.point.id,
+                        scheme1_id: this.selected.scheme1.id,
+                        scheme2_id: this.selected.scheme2.id,
+                        floor1_text_begin: this.floor1_text_begin,
+                        floor1_text_end: this.floor1_text_end,
+                        floor2_text_begin: this.floor2_text_begin,
+                        floor2_text_end: this.floor2_text_end,
+                        route_code_floor1: this.route_code_floor1,
+                        route_code_floor2: this.route_code_floor2
+                    })
+                    .then(response => (
+                        this.$router.push({name: 'Routes', params: {kiosk: 1} })
+                    ))
+                    .catch((error) => {
+                        //
+                    })
+                } else {
+                    axios.post(`/api/admin/routes`, {
+                        kiosk_id: this.selected.kiosk.id,
+                        point_id: this.selected.point.id,
+                        scheme1_id: this.selected.scheme1.id,
+                        scheme2_id: this.selected.scheme2.id,
+                        floor1_text_begin: this.floor1_text_begin,
+                        floor1_text_end: this.floor1_text_end,
+                        floor2_text_begin: this.floor2_text_begin,
+                        floor2_text_end: this.floor2_text_end,
+                        route_code_floor1: this.route_code_floor1,
+                        route_code_floor2: this.route_code_floor2
+                    })
+                    .then(response => (
+                        this.$router.push({name: 'Routes', params: {kiosk: 1} })
+                    ))
+                    .catch((error) => {
+                        //
+                    })
+                }
+            },
+            del() {
+                if(confirm('Точно удалить маршрут?')) {
+                    axios.delete(`/api/admin/route/${this.$route.params.id}/delete`)
+                    .then(response => {
+                        this.$router.push({ name: 'Routes', params: {kiosk: 1} })
+                    })
+                    .catch(errors => {
+                        return this.$swal({
+                            text: 'Ошибка',
+                            icon: 'error',
+                        })
+                    })
+                }
+            },
         },
     }
 </script>
