@@ -270,11 +270,14 @@ body {
 }
 
 .point-drawing-area {
-    width: 1024px;
-    height: 576px;
+    width: 800px;
     display: block;
     margin: 0 auto;
     position: relative;
+}
+.point-drawing-area img {
+    width: 800px;
+    height: auto;
 }
 
 .point-drawing-area svg {
