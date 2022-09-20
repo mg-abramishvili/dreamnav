@@ -63,7 +63,7 @@
             </div>
 
             <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary">Сохранить</button>
-            <button @click="del()" class="btn btn-outline-danger ms-2">Удалить</button>
+            <button @click="del()" v-if="$route.params.id" class="btn btn-outline-danger ms-2">Удалить</button>
         </div>
 
     </div>

@@ -5,6 +5,9 @@ import Home from './components/admin/Home.vue'
 import Pages from './components/admin/pages/Index.vue'
 import PageMaster from './components/admin/pages/Master.vue'
 
+import Events from './components/admin/events/Index.vue'
+import EventMaster from './components/admin/events/Master.vue'
+
 import Kiosks from './components/admin/kiosks/Index.vue'
 import KioskMaster from './components/admin/kiosks/Master.vue'
 
@@ -40,6 +43,16 @@ const routes = [
         path: '/admin/page-master/:id?',
         name: 'PageMaster',
         component: PageMaster
+    },
+    {
+        path: '/admin/events',
+        name: 'Events',
+        component: Events
+    },
+    {
+        path: '/admin/event-master/:id?',
+        name: 'EventMaster',
+        component: EventMaster
     },
     {
         path: '/admin/kiosks',

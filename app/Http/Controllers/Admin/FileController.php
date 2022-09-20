@@ -174,5 +174,23 @@ class FileController extends Controller
                 'Content-Disposition' => 'inline',
             ]);
         }
+
+        if (request()->file('event_image')) {
+            $file = request()->file('event_image');
+            $filename = time().'.'.$file->extension();
+
+            if (!file_exists(public_path() . '/uploads/events')) {
+                mkdir(public_path() . '/uploads/events', 0755, true);
+            }
+
+            $img = Image::make($file->path());
+            $img->resize(2000, 2000, function ($const) {
+                $const->aspectRatio();
+            })->save(public_path() . '/uploads/events/' . $filename);
+
+            return \Response::make('/uploads/events/' . $filename, 200, [
+                'Content-Disposition' => 'inline',
+            ]);
+        }
     }
 }

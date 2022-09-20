@@ -2,17 +2,17 @@
     <div>
         <div class="content-header px-4">
             <h1>
-                <router-link :to="{name: 'Banners'}" class="btn btn-back">
+                <router-link :to="{name: 'Events'}" class="btn btn-back">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                     </svg>
                 </router-link>
 
                 <template v-if="$route.params.id">
-                    {{ banner.name }}
+                    {{ event.name }}
                 </template>
                 <template v-else>
-                    Новый баннер
+                    Новое событие
                 </template>
             </h1>
         </div>
@@ -22,41 +22,41 @@
         </div>
 
         <div v-if="!views.loading" class="content p-4">
-            <div class="mb-4">
-                <label class="form-label">Название</label>
-                <input v-model="name" type="text" class="form-control">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-4">
+                        <label class="form-label">Название</label>
+                        <input v-model="name" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-4">
+                        <label class="form-label">Дата</label>
+                        <input v-model="date" type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="mb-4">
+                        <label class="form-label">Время</label>
+                        <input v-model="time" type="text" class="form-control">
+                    </div>
+                </div>
             </div>
 
             <div class="mb-4">
-                <select v-model="selected.type" class="form-select" disabled>
-                    <option value="image">Изображение</option>
-                    <option value="video">Видео</option>
-                </select>
+                <label class="form-label">Описание</label>
+                <ckeditor :editor="editor" v-model="description" :config="editorConfig"></ckeditor>
             </div>
 
-            <div v-if="selected.type == 'image'" class="mb-4">
-                <label class="form-label">Изображение</label>
+            <div class="mb-4">
+                <label class="form-label">Постер</label>
                 <file-pond
-                    name="banner_image"
-                    ref="banner_image"
+                    name="event_image"
+                    ref="event_image"
                     label-idle="Выбрать файл"
                     v-bind:allow-multiple="false"
                     v-bind:allow-reorder="false"
                     accepted-file-types="image/jpeg, image/png"
-                    :server="server"
-                    v-bind:files="filepond_content_edit"
-                />
-            </div>
-
-            <div v-if="selected.type == 'video'" class="mb-4">
-                <label class="form-label">Видео</label>
-                <file-pond
-                    name="banner_video"
-                    ref="banner_video"
-                    label-idle="Выбрать файл"
-                    v-bind:allow-multiple="false"
-                    v-bind:allow-reorder="false"
-                    accepted-file-types="video/mp4"
                     :server="server"
                     v-bind:files="filepond_content_edit"
                 />
@@ -81,17 +81,19 @@ const FilePond = vueFilePond(
   FilePondPluginImagePreview
 )
 
+import CKEditor from '@ckeditor/ckeditor5-vue'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 export default {
     data() {
         return {
-            banner: {},
+            event: {},
 
             name: '',
-            content: '',
-
-            selected: {
-                type: 'image'
-            },
+            date: '',
+            time: '',
+            description: '',
+            image: '',
 
             filepond_content: [],
             filepond_content_edit: [],
@@ -99,6 +101,11 @@ export default {
             views: {
                 loading: true,
                 saveButton: true,
+            },
+
+            editor: ClassicEditor,
+            editorConfig: {
+                toolbar: [ 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'insertTable', '|', 'undo', 'redo' ],
             },
 
             server: {
@@ -145,7 +152,7 @@ export default {
     },
     created() {
         if(this.$route.params.id) {
-            this.loadBanner()
+            this.loadEvent()
         }
 
         if(!this.$route.params.id) {
@@ -153,18 +160,20 @@ export default {
         }
     },
     methods: {
-        loadBanner() {
-            axios.get(`/api/admin/banner/${this.$route.params.id}`)
+        loadEvent() {
+            axios.get(`/api/admin/event/${this.$route.params.id}`)
             .then(response => {
-                this.banner = response.data
+                this.event = response.data
 
                 this.name = response.data.name
-                this.type = response.data.type
+                this.date = response.data.date
+                this.time = response.data.time
+                this.description = response.data.description
 
-                if(response.data.content) {
+                if(response.data.image) {
                     this.filepond_content_edit = [
                         {
-                            source: response.data.content,
+                            source: response.data.image,
                             options: {
                                 type: 'local',
                             }
@@ -176,15 +185,8 @@ export default {
             })
         },
         save() {
-            if(this.selected.type == 'image') {
-                if(document.getElementsByName("banner_image")[0]) {
-                    this.content = document.getElementsByName("banner_image")[0].value
-                }
-            }
-            if(this.selected.type == 'video') {
-                if(document.getElementsByName("banner_video")[0]) {
-                    this.content = document.getElementsByName("banner_video")[0].value
-                }
+            if(document.getElementsByName("event_image")[0]) {
+                this.image = document.getElementsByName("event_image")[0].value
             }
 
             if(!this.name) {
@@ -194,9 +196,30 @@ export default {
                 })
             }
 
-            if(!this.content) {
+            if(!this.image) {
                 return this.$swal({
-                    text: 'Загрузите изображение или видео',
+                    text: 'Загрузите постер',
+                    icon: 'error',
+                })
+            }
+
+            if(!this.date) {
+                return this.$swal({
+                    text: 'Укажите дату',
+                    icon: 'error',
+                })
+            }
+
+            if(!this.time) {
+                return this.$swal({
+                    text: 'Укажите время',
+                    icon: 'error',
+                })
+            }
+
+            if(!this.description) {
+                return this.$swal({
+                    text: 'Заполните описание',
                     icon: 'error',
                 })
             }
@@ -204,15 +227,17 @@ export default {
             this.views.saveButton = false
 
             if(this.$route.params.id) {
-                axios.put(`/api/admin/banner/${this.$route.params.id}/update`, {
+                axios.put(`/api/admin/event/${this.$route.params.id}/update`, {
                     name: this.name,
-                    type: this.selected.type,
-                    content: this.content,
+                    date: this.date,
+                    time: this.time,
+                    description: this.description,
+                    image: this.image,
                 })
                 .then(response => {
                     this.views.saveButton = true
     
-                    this.$router.push({ name: 'Banners' })
+                    this.$router.push({ name: 'Events' })
                 })
                 .catch(errors => {
                     this.views.saveButton = true
@@ -225,15 +250,17 @@ export default {
             }
 
             if(!this.$route.params.id) {
-                axios.post(`/api/admin/banners`, {
+                axios.post(`/api/admin/events`, {
                     name: this.name,
-                    type: this.selected.type,
-                    content: this.content,
+                    date: this.date,
+                    time: this.time,
+                    description: this.description,
+                    image: this.image,
                 })
                 .then(response => {
                     this.views.saveButton = true
     
-                    this.$router.push({ name: 'Banners' })
+                    this.$router.push({ name: 'Events' })
                 })
                 .catch(errors => {
                     this.views.saveButton = true
@@ -246,10 +273,10 @@ export default {
             }
         },
         del() {
-            if(confirm('Точно удалить баннер?')) {
-                axios.delete(`/api/admin/banner/${this.$route.params.id}/delete`)
+            if(confirm('Точно удалить событие?')) {
+                axios.delete(`/api/admin/event/${this.$route.params.id}/delete`)
                 .then(response => {
-                    this.$router.push({ name: 'Banners' })
+                    this.$router.push({ name: 'Events' })
                 })
                 .catch(errors => {
                     return this.$swal({
@@ -261,7 +288,8 @@ export default {
         },
     },
     components: {
-        FilePond
+        FilePond,
+        ckeditor: CKEditor.component,
     }
 }
 </script>

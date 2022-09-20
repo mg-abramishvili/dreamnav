@@ -37,6 +37,13 @@ Route::get('admin/page/{id}', [App\Http\Controllers\Admin\PageController::class,
 Route::put('admin/page/{id}/update', [App\Http\Controllers\Admin\PageController::class, 'update']);
 Route::delete('admin/page/{id}/delete', [App\Http\Controllers\Admin\PageController::class, 'delete']);
 
+// ADMIN EVENTS
+Route::get('admin/events', [App\Http\Controllers\Admin\EventController::class, 'index']);
+Route::post('admin/events', [App\Http\Controllers\Admin\EventController::class, 'store']);
+Route::get('admin/event/{id}', [App\Http\Controllers\Admin\EventController::class, 'event']);
+Route::put('admin/event/{id}/update', [App\Http\Controllers\Admin\EventController::class, 'update']);
+Route::delete('admin/event/{id}/delete', [App\Http\Controllers\Admin\EventController::class, 'delete']);
+
 // ADMIN BLOCKS
 Route::post('admin/blocks', [App\Http\Controllers\Admin\BlockController::class, 'store']);
 Route::put('admin/block/{id}/update', [App\Http\Controllers\Admin\BlockController::class, 'update']);
