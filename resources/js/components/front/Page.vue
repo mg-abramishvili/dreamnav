@@ -47,6 +47,10 @@ export default {
                         this.$refs.pesok.$refs.routes[0].resetRoutes()
                         this.$refs.pesok.$refs.routes[0].zoomReset()
                     }
+
+                    if(block.type == 'events') {
+                        this.$refs.pesok.$refs.events[0].slideToZero()
+                    }
                 })
             }
 
@@ -54,6 +58,18 @@ export default {
                 if(toPage == 'home') {
                     this.$router.push({ name: 'Home', params: { kiosk: this.$route.params.kiosk } })
                 } else {
+                    toPage.blocks.forEach(block => {
+                        if(block.type == 'video') {
+                            setTimeout(() => {
+                                let video = document.getElementById('video_' + block.id)
+
+                                if(video) {
+                                    video.play()
+                                }
+                            }, 100)
+                        }
+                    })
+
                     this.$router.push({ name: 'Page', params: { id: toPage.id, kiosk: this.$route.params.kiosk } })
                 }
             }

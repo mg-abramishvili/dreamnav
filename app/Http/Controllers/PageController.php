@@ -18,7 +18,7 @@ class PageController extends Controller
             ->with(['blocks' => function ($query) {
                 $query->orderBy('order', 'asc');
             }])
-            ->with('children')
+            ->with('children.blocks', 'children.icon', 'parent.blocks')
             ->find($id);
     }
 }

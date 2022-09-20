@@ -26,6 +26,9 @@ Route::get('route/{id}', [App\Http\Controllers\RouteController::class, 'route'])
 // FRONT POINTS
 Route::get('points', [App\Http\Controllers\PointController::class, 'index']);
 
+// FRONT EVENTS
+Route::get('events', [App\Http\Controllers\EventController::class, 'index']);
+
 // ADMIN CONFIG
 Route::get('admin/config', [App\Http\Controllers\Admin\ConfigController::class, 'index']);
 Route::put('admin/config-update', [App\Http\Controllers\Admin\ConfigController::class, 'update']);

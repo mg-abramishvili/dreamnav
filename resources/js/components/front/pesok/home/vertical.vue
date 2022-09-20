@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/css';
+import { Autoplay } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
 import 'swiper/css/autoplay'
 
 export default {

@@ -35,16 +35,24 @@
                 <div v-else-if="block.type == 'routes'">
                     <Routes ref="routes" :kiosk="kiosk" />
                 </div>
+
+                <div v-else-if="block.type == 'events'">
+                    <Events ref="events" />
+                </div>
             </template>
 
             <template v-if="page.is_folder">
-                <ul>
-                    <li v-for="pg in page.children">{{ pg.name }}</li>
+                <ul class="folder">
+                    <li @click="goTo(page, pg)" v-for="pg in page.children">
+                        <div v-if="pg.icon" class="icon" v-bind:style="{ 'background-image': 'url(' + pg.icon.image + ')' }"></div>
+                        <span>{{ pg.name }}</span>
+                    </li>
                 </ul>
             </template>
         </div>
 
         <div class="footer page-footer">
+            <button v-if="page.parent" @click="goTo(page, page.parent)">Назад</button>
             <button @click="goTo(page, 'home')">На главную</button>
         </div>
     </div>
@@ -52,7 +60,9 @@
 
 <script>
 import { read, utils } from 'xlsx'
+
 import Routes from '../../_comps/Routes.vue'
+import Events from '../../_comps/Events.vue'
 
 export default {
     props: ['page', 'kiosk'],
@@ -81,7 +91,8 @@ export default {
         },
     },
     components: {
-        Routes
+        Routes,
+        Events,
     }
 }
 </script>
