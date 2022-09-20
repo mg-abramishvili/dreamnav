@@ -3,7 +3,8 @@
         <PesokVertical
             v-if="config.orientation == 'vertical'"
             ref="pesok"
-            :page="page" />
+            :page="page"
+            :kiosk="$route.params.kiosk" />
     </template>
 </template>
 

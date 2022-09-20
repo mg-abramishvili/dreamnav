@@ -29,7 +29,7 @@
                 </div>
 
                 <div v-else-if="block.type == 'routes'">
-                    <Routes ref="routes" />
+                    <Routes ref="routes" :kiosk="kiosk" />
                 </div>
             </template>
         </div>
@@ -45,7 +45,7 @@ import { read, utils } from 'xlsx'
 import Routes from '../../_comps/Routes.vue'
 
 export default {
-    props: ['page'],
+    props: ['page', 'kiosk'],
     data() {
         return {
             //

@@ -117,6 +117,7 @@ import Panzoom from '@panzoom/panzoom'
 // import SimpleKeyboard from "./routes_keyboard.vue"
 
 export default {
+    props: ['kiosk'],
     data() {
         return {
             schemes: [],
@@ -173,7 +174,7 @@ export default {
             })
         },
         loadRoutes() {
-            axios.get(`/api/routes/1`)
+            axios.get(`/api/routes/${this.kiosk}`)
             .then(response => {
                 this.routes = response.data
             })
