@@ -1,23 +1,44 @@
 <template>
     <div>
-        <button @click="zoom()">ZoomIn</button>
+        <div class="panzoom-wrapper" :class="[`${views.windowWidth > 1920 ? 'map4K':'map1080'}`]">
+            <div class="panzoom-controls">
+                <button @click="zoomIn()">+</button>
+                <br>
+                <button @click="zoomOut()">-</button>
+            </div>
 
-        <div id="panzoom">
-            <div id="map" class="map" :class="[`${views.windowWidth > 1920 ? 'map4K':'map1080'}`]">
-                <template v-for="scheme in schemes">
-                    <img v-show="scheme.id == selected.scheme.id" :src="scheme.image">
+            <div id="panzoom">
+                <div id="map" class="map">
+                    <template v-for="scheme in schemes">
+                        <img v-show="scheme.id == selected.scheme.id" :src="scheme.image">
 
-                    <svg v-if="scheme.id == selected.scheme.id" class="map-path svg1">
-                        <template v-for="(point, index) in selected.route.route_code_floor1">
-                            <template v-if="selected.route.route_code_floor1[index - 1]">
-                                <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', ' + selected.route.route_code_floor1[index - 1].x + ' ' + selected.route.route_code_floor1[index - 1].y"></path>
+                        <svg v-if="scheme.id == selected.scheme.id" class="map-path svg1">
+                            <template v-for="(point, index) in selected.route.route_code_floor1">
+                                <template v-if="selected.route.route_code_floor1[index - 1]">
+                                    <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', ' + selected.route.route_code_floor1[index - 1].x + ' ' + selected.route.route_code_floor1[index - 1].y"></path>
+                                </template>
+                                <template v-else>
+                                    <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', '"></path>
+                                </template>
+                                <circle v-if="point.x" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
                             </template>
-                            <template v-else>
-                                <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', '"></path>
-                            </template>
-                            <circle v-if="point.x" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
-                        </template>
 
+                            <template v-for="(point, index) in selected.route.route_code_floor2">
+                                <template v-if="selected.route.route_code_floor2[index - 1]">
+                                    <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', ' + selected.route.route_code_floor2[index - 1].x + ' ' + selected.route.route_code_floor2[index - 1].y"></path>
+                                </template>
+                                <template v-else>
+                                    <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', '"></path>
+                                </template>
+                                <circle v-if="point.x" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
+                            </template>
+
+                            <polygon v-for="point in points.filter(p => p.scheme_id == selected.scheme.id)" @click="selectPoint(point)" :points="point.object.join()" style="fill:transparent;stroke:transparent;stroke-width:1"></polygon>
+                        </svg>
+                    </template>
+                    
+
+                    <!-- <svg v-if="selected.slide === 2" class="map-path svg2">
                         <template v-for="(point, index) in selected.route.route_code_floor2">
                             <template v-if="selected.route.route_code_floor2[index - 1]">
                                 <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', ' + selected.route.route_code_floor2[index - 1].x + ' ' + selected.route.route_code_floor2[index - 1].y"></path>
@@ -25,25 +46,10 @@
                             <template v-else>
                                 <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', '"></path>
                             </template>
-                            <circle v-if="point.x" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
+                            <circle v-if="point.x" id="02" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
                         </template>
-
-                        <polygon v-for="point in points.filter(p => p.scheme_id == selected.scheme.id)" @click="selectPoint(point)" :points="point.object.join()" style="fill:transparent;stroke:transparent;stroke-width:1"></polygon>
-                    </svg>
-                </template>
-                
-
-                <!-- <svg v-if="selected.slide === 2" class="map-path svg2">
-                    <template v-for="(point, index) in selected.route.route_code_floor2">
-                        <template v-if="selected.route.route_code_floor2[index - 1]">
-                            <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', ' + selected.route.route_code_floor2[index - 1].x + ' ' + selected.route.route_code_floor2[index - 1].y"></path>
-                        </template>
-                        <template v-else>
-                            <path v-if="point.x" class="key-anim01" fill="none" stroke-width="5px" stroke="rgba(255,51,51,0.8)" :d="'M' + point.x + ' ' + point.y + ', '"></path>
-                        </template>
-                        <circle v-if="point.x" id="02" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
-                    </template>
-                </svg> -->
+                    </svg> -->
+                </div>
             </div>
         </div>
 
@@ -136,7 +142,6 @@ export default {
         this.panzoom = Panzoom(document.getElementById('panzoom'), {
             minScale: 1,
             maxScale: 3,
-            // startTransform: 'scale(0)',
             contain: 'outside',
         })
     },
@@ -225,8 +230,14 @@ export default {
             this.selected.route = ''
             this.searchInput = ''
         },
-        zoom() {
+        zoomIn() {
             this.panzoom.zoomIn()
+        },
+        zoomOut() {
+            this.panzoom.zoomOut()
+        },
+        zoomReset() {
+            this.panzoom.reset()
         },
     },
     components: {

@@ -43,6 +43,7 @@ export default {
 
                 if(block.type == 'routes') {
                     this.$refs.pesok.$refs.routes[0].resetRoutes()
+                    this.$refs.pesok.$refs.routes[0].zoomReset()
                 }
             })
 

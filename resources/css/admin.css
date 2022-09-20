@@ -78,8 +78,8 @@ body {
     font-weight: 500;
     color: #333;
 }
-.sidebar .nav-link .feather {
-    margin-right: 4px;
+.sidebar .nav-link .bi {
+    margin-right: 7px;
     color: #727272;
 }
 .sidebar .nav-link.active {

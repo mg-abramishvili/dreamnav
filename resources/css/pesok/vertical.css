@@ -187,27 +187,51 @@
         stroke-dashoffset: 0;
     }
 }
-
-.map {
+.panzoom-wrapper {
     width: 800px;
+    overflow: hidden;
+    background-color: gray;
+}
+.map1080 {
+    transform: scale(1.25);
+    transform-origin: 0 0;
+    margin-bottom: 14vh;
+}
+.map4K {
+    transform: scale(2.5);
+    transform-origin: 0 0;
+    margin-bottom: 36vh;
+}
+#panzoom {
+    width: 800px;
+}
+.panzoom-controls {
+    position: absolute;
+    z-index: 100;
+    top: 1vh;
+    right: 1vh;
+}
+.panzoom-controls button {
+    font-size: 3vh;
+    width: 3vh;
+    height: 3vh;
+    line-height: 3vh;
+    padding: 0;
+    border-radius: 100%;
+    background-color: #fff;
+    color: #000;
+    margin-bottom: 0.5vh;
+}
+.map {
     position: relative;
     /* background-color: #fff; */
     border-radius: 1vh;
     /* border: 0.2vh solid #c5d0db; */
     overflow: hidden;
-    margin-bottom: 2vh;
+    width: 800px;
 }
-/* .map1080 {
-    transform: scale(1.25);
-    transform-origin: 0 0;
-    margin-bottom: 12vh;
-}
-.map4K {
-    transform: scale(2.95);
-    transform-origin: 0 0;
-} */
 .map1080 img,
-.map4k img {
+.map4K img {
     width: 800px;
     height: auto;
 }
