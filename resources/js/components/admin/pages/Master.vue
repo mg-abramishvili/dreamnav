@@ -92,6 +92,16 @@
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
 
+                            <div v-else-if="element.type == 'image_slider'" class="block-area block-area-image-slider">
+                                <div @click="editBlock(element)">
+                                    <div v-if="element.content" class="d-flex">
+                                        <img v-for="imageItem in element.content.split(',')" :src="imageItem" alt="">
+                                    </div>
+                                    <img v-else src="/img/image-placeholder.png" alt="">
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
+
                             <div v-else-if="element.type == 'video'" class="block-area">
                                 <div @click="editBlock(element)">
                                     <video v-if="element.content">

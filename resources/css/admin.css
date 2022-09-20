@@ -192,6 +192,10 @@ body {
     border-color: #2470dc;
     cursor: pointer;
 }
+.block-area-image-slider img {
+    width: auto;
+    height: 150px;
+}
 .block-area.ghost {
     background-color: rgba(254, 133, 133, 0.85);
 }

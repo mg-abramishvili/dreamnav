@@ -11,6 +11,8 @@
                 
                 <ImageMaster v-if="block.type == 'image'" :block="block" />
                 
+                <ImageSliderMaster v-if="block.type == 'image_slider'" :block="block" />
+                
                 <VideoMaster v-if="block.type == 'video'" :block="block" />
                 
                 <PdfMaster v-if="block.type == 'pdf'" :block="block" />
@@ -26,6 +28,7 @@
 <script>
 import TextMaster from './types/TextMaster.vue'
 import ImageMaster from './types/ImageMaster.vue'
+import ImageSliderMaster from './types/ImageSliderMaster.vue'
 import VideoMaster from './types/VideoMaster.vue'
 import PdfMaster from './types/PdfMaster.vue'
 import ExcelMaster from './types/ExcelMaster.vue'
@@ -54,6 +57,7 @@ export default {
     components: {
         TextMaster,
         ImageMaster,
+        ImageSliderMaster,
         VideoMaster,
         PdfMaster,
         ExcelMaster,
