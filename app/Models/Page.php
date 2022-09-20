@@ -9,6 +9,16 @@ class Page extends Model
 {
     use HasFactory;
 
+    public function parent()
+    {
+        return $this->belongsTo(Page::class);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Page::class, 'parent_id', 'id');
+    }
+
     public function blocks()
     {
         return $this->hasMany(Block::class);

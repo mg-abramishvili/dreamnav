@@ -37,7 +37,7 @@
                 <Icons v-if="views.icons" :icons="icons" />
             </div>            
 
-            <div class="page-editor">
+            <div v-if="!is_folder" class="page-editor">
                 <div class="toolbox">
                     <ul>
                         <li>
@@ -132,7 +132,10 @@
                 </div>
             </div>
 
-            <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary mt-4">Сохранить</button>
+            <div class="mt-4">
+                <button @click="save()" :disabled="!views.saveButton" class="btn btn-primary">Сохранить</button>
+                <button @click="del()" v-if="$route.params.id" class="btn btn-outline-danger ms-2">Удалить</button>
+            </div>
         </div>
 
         <BlockMaster v-if="selected.block" :block="selected.block" />
@@ -148,6 +151,7 @@ import BlockMaster from './blocks/Master.vue'
 import Icons from './icons/Index.vue'
 
 export default {
+    props: ['query'],
     data() {
         return {
             page: {},
@@ -156,6 +160,8 @@ export default {
             blocks: [],
 
             name: '',
+            parent_id: '',
+            is_folder: false,
 
             selected: {
                 block: '',
@@ -193,6 +199,14 @@ export default {
     created() {
         this.loadIcons()
 
+        if(this.query.type && this.query.type == 'folder') {
+            this.is_folder = true
+        }
+
+        if(this.query.from) {
+            this.parent_id = this.query.from
+        }
+
         if(this.$route.params.id) {
             this.loadPage()
         } else {
@@ -213,6 +227,7 @@ export default {
 
                 this.name = response.data.name
                 this.blocks = response.data.blocks
+                this.parent_id = response.data.parent_id
                 this.selected.icon = this.icons.find(icon => icon.id == response.data.icon_id)
 
                 this.views.loading = false
@@ -282,7 +297,13 @@ export default {
                     icon: 'error',
                 })
             }
-            if(!this.blocks.length) {
+            if(!this.selected.icon) {
+                return this.$swal({
+                    text: 'Выберите инконку для страницы',
+                    icon: 'error',
+                })
+            }
+            if(!this.is_folder && !this.blocks.length) {
                 return this.$swal({
                     text: 'Страница не может быть пуста, добавить блоки с контентом',
                     icon: 'error',
@@ -295,7 +316,9 @@ export default {
                 axios.put(`/api/admin/page/${this.$route.params.id}/update`, {
                     name: this.name,
                     blocks: this.blocks,
-                    icon_id: this.selected.icon.id
+                    icon_id: this.selected.icon.id,
+                    is_folder: this.is_folder,
+                    parent_id: this.parent_id,
                 })
                 .then(response => {
                     this.views.saveButton = true
@@ -316,7 +339,9 @@ export default {
                 axios.post(`/api/admin/pages`, {
                     name: this.name,
                     blocks: this.blocks,
-                    icon_id: this.selected.icon.id
+                    icon_id: this.selected.icon.id,
+                    is_folder: this.is_folder,
+                    parent_id: this.parent_id,
                 })
                 .then(response => {
                     this.views.saveButton = true
@@ -326,6 +351,20 @@ export default {
                 .catch(errors => {
                     this.views.saveButton = true
                     
+                    return this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
+                })
+            }
+        },
+        del() {
+            if(confirm('Точно удалить страницу?')) {
+                axios.delete(`/api/admin/page/${this.$route.params.id}/delete`)
+                .then(response => {
+                    this.$router.push({ name: 'Pages' })
+                })
+                .catch(errors => {
                     return this.$swal({
                         text: 'Ошибка',
                         icon: 'error',

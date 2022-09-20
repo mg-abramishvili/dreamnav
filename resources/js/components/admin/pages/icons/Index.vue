@@ -21,8 +21,8 @@
                         />
 
                         <div v-if="icons.length" class="row">
-                            <div v-for="icon in icons" class="col-lg-3">
-                                <div @click="selectIcon(icon)" class="icon-item">
+                            <div v-for="icon in icons" class="col-3">
+                                <div @click="selectIcon(icon)" class="icon-item mb-3">
                                     <img :src="icon.image" alt="">
                                 </div>
                             </div>
@@ -113,33 +113,35 @@ export default {
             this.$parent.views.icons = false
         },
         save() {
-            if(document.getElementsByName("icon_image")[0]) {
-                this.icon = document.getElementsByName("icon_image")[0].value
-            }
-
-            if(!this.icon) {
-                return this.$swal({
-                    text: 'Загрузите картинку',
-                    icon: 'error',
+            setTimeout(() => {
+                if(document.getElementsByName("icon_image")[0]) {
+                    this.icon = document.getElementsByName("icon_image")[0].value
+                }
+    
+                if(!this.icon) {
+                    return this.$swal({
+                        text: 'Загрузите картинку',
+                        icon: 'error',
+                    })
+                }
+    
+                axios.post(`/api/admin/icons`, {
+                    image: this.icon
                 })
-            }
-
-            axios.post(`/api/admin/icons`, {
-                image: this.icon
-            })
-            .then(response => {
-                this.icon = ''
-
-                this.filepond_image_edit = []
-
-                this.loadIcons()
-            })
-            .catch(errors => {
-                return this.$swal({
-                    text: 'Ошибка',
-                    icon: 'error',
+                .then(response => {
+                    this.icon = ''
+    
+                    this.filepond_image_edit = []
+    
+                    this.$parent.loadIcons()
                 })
-            })
+                .catch(errors => {
+                    return this.$swal({
+                        text: 'Ошибка',
+                        icon: 'error',
+                    })
+                })
+            }, 1000)
         }
     },
     components: {

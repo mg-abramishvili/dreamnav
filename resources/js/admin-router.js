@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from './components/admin/Home.vue'
 
 import Pages from './components/admin/pages/Index.vue'
+import Page from './components/admin/pages/Page.vue'
 import PageMaster from './components/admin/pages/Master.vue'
 
 import Events from './components/admin/events/Index.vue'
@@ -40,9 +41,15 @@ const routes = [
         component: Pages
     },
     {
+        path: '/admin/page/:id',
+        name: 'Page',
+        component: Page
+    },
+    {
         path: '/admin/page-master/:id?',
         name: 'PageMaster',
-        component: PageMaster
+        component: PageMaster,
+        props: route => ({ query: route.query })
     },
     {
         path: '/admin/events',

@@ -11,7 +11,7 @@ class PageController extends Controller
 {
     public function index()
     {
-        return Page::orderBy('order', 'asc')->get();
+        return Page::where('parent_id', null)->orderBy('order', 'asc')->get();
     }
 
     public function page($id)
@@ -20,6 +20,7 @@ class PageController extends Controller
             ->with(['blocks' => function ($query) {
                 $query->orderBy('order', 'asc');
             }])
+            ->with('children')
             ->find($id);
     }
 
@@ -27,61 +28,76 @@ class PageController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'blocks' => 'required',
         ]);
 
         $page = new Page();
         
         $page->name = $request->name;
         $page->icon_id = $request->icon_id;
+        $page->is_folder = $request->is_folder;
+        $page->parent_id = $request->parent_id;
 
         $page->save();
-
-        foreach($request->blocks as $b)
-        {
-            $block = Block::find($b['id']);
-
-            if(!$block) {
-                $block = new Block();
+        
+        if(isset($request->blocks)) {
+            foreach($request->blocks as $b)
+            {
+                $block = Block::find($b['id']);
+    
+                if(!$block) {
+                    $block = new Block();
+                }
+    
+                $block->page_id = $page->id;
+                $block->type = $b['type'];
+                $block->content = $b['content'];
+                $block->order = $b['order'];
+    
+                $block->save();
             }
-
-            $block->page_id = $page->id;
-            $block->type = $b['type'];
-            $block->content = $b['content'];
-            $block->order = $b['order'];
-
-            $block->save();
         }
+
+        return $page->id;
     }
 
     public function update($id, Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
-            'blocks' => 'required',
         ]);
 
         $page = Page::find($id);
         
         $page->name = $request->name;
         $page->icon_id = $request->icon_id;
+        $page->is_folder = $request->is_folder;
+        $page->parent_id = $request->parent_id;
 
         $page->save();
 
-        foreach($request->blocks as $b)
-        {
-            $block = Block::find($b['id']);
+        if(isset($request->blocks)) {
+            foreach($request->blocks as $b)
+            {
+                $block = Block::find($b['id']);
 
-            if(!$block) {
-                $block = new Block();
+                if(!$block) {
+                    $block = new Block();
+                }
+
+                $block->page_id = $page->id;
+                $block->type = $b['type'];
+                $block->content = $b['content'];
+                $block->order = $b['order'];
+
+                $block->save();
             }
-
-            $block->page_id = $page->id;
-            $block->type = $b['type'];
-            $block->content = $b['content'];
-            $block->order = $b['order'];
-
-            $block->save();
         }
+    }
+
+    public function delete($id)
+    {
+        $page = Page::find($id);
+
+        $page->delete();
     }
 }

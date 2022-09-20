@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="content-header px-4">
-            <h1>Страницы</h1>
+            <h1>{{ page.name }}</h1>
 
             <div>
-                <router-link :to="{name: 'PageMaster', query: {type: 'page'} }" class="btn btn-primary">Создать страницу</router-link>
-                <router-link :to="{name: 'PageMaster', query: {type: 'folder'} }" class="btn btn-outline-primary ms-2">Создать папку</router-link>
+                <router-link :to="{name: 'PageMaster', query: {type: 'page', from: page.id} }" class="btn btn-primary">Создать страницу</router-link>
+                <router-link :to="{name: 'PageMaster', query: {type: 'folder', from: page.id} }" class="btn btn-outline-primary ms-2">Создать папку</router-link>
             </div>
         </div>
 
@@ -14,9 +14,9 @@
         </div>
 
         <div v-if="!views.loading" class="content p-4">
-            <table v-if="pages.length" class="table align-middle">
+            <table v-if="page.children.length" class="table align-middle">
                 <tbody>
-                    <tr v-for="page in pages">
+                    <tr v-for="page in page.children">
                         <td @click="goToPage(page)" class="w-50">
                             {{ page.name }}
                         </td>
@@ -40,7 +40,7 @@
 export default {
     data() {
         return {
-            pages: [],
+            page: {},
 
             views: {
                 loading: true,
@@ -52,9 +52,9 @@ export default {
     },
     methods: {
         loadPages() {
-            axios.get('/api/admin/pages')
+            axios.get(`/api/admin/page/${this.$route.params.id}`)
             .then(response => {
-                this.pages = response.data
+                this.page = response.data
 
                 this.views.loading = false
             })

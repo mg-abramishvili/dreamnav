@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('language_id')->default(1);
             $table->integer('order')->default(999);
             $table->integer('icon_id')->nullable();
+            $table->boolean('is_folder')->default(false);
             $table->timestamps();
         });
     }
