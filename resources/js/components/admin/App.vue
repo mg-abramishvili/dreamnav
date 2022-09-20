@@ -95,7 +95,7 @@
                 </nav>
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 p-0">
-                    <router-view></router-view>
+                    <router-view :key="$route.path"></router-view>
                 </main>
             </div>
         </div>

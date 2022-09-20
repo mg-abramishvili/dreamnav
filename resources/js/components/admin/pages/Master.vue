@@ -228,6 +228,7 @@ export default {
                 this.name = response.data.name
                 this.blocks = response.data.blocks
                 this.parent_id = response.data.parent_id
+                this.is_folder = response.data.is_folder
                 this.selected.icon = this.icons.find(icon => icon.id == response.data.icon_id)
 
                 this.views.loading = false
@@ -322,8 +323,12 @@ export default {
                 })
                 .then(response => {
                     this.views.saveButton = true
-    
-                    this.$router.push({ name: 'Pages' })
+
+                    if(this.query.from) {
+                        this.$router.push({ name: 'Page', params: {id: this.query.from } })
+                    } else {
+                        this.$router.push({ name: 'Pages' })
+                    }
                 })
                 .catch(errors => {
                     this.views.saveButton = true
@@ -346,7 +351,11 @@ export default {
                 .then(response => {
                     this.views.saveButton = true
     
-                    this.$router.push({ name: 'Pages' })
+                    if(this.query.from) {
+                        this.$router.push({ name: 'Page', params: {id: this.query.from } })
+                    } else {
+                        this.$router.push({ name: 'Pages' })
+                    }
                 })
                 .catch(errors => {
                     this.views.saveButton = true
@@ -366,7 +375,7 @@ export default {
                 })
                 .catch(errors => {
                     return this.$swal({
-                        text: 'Ошибка',
+                        text: errors.response.data,
                         icon: 'error',
                     })
                 })

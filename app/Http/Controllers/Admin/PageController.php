@@ -98,6 +98,11 @@ class PageController extends Controller
     {
         $page = Page::find($id);
 
+        if(count($page->children))
+        {
+            return response('Папку нельзя удалить - внутри есть страницы', 500);
+        }
+
         $page->delete();
     }
 }
