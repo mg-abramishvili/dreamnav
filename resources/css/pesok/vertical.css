@@ -60,6 +60,7 @@
 }
 .menu {
     width: 65vw;
+    background-color: #172119;
 }
 .menu ul {
     padding: 0;
@@ -107,6 +108,7 @@
     text-transform: uppercase;
     z-index: 5;
     font-family: 'Cimero Pro';
+    line-height: 1.1;
 }
 /* HOME */
 

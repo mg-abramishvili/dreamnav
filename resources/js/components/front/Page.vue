@@ -32,23 +32,31 @@ export default {
                 this.page = response.data
             })
         },
-        goHome(page) {
-            page.blocks.forEach(block => {
-                if(block.type == 'video') {
-                    let video = document.getElementById('video_' + block.id)
-
-                    if(video) {
-                        video.load()
+        goTo(fromPage, toPage) {
+            if(fromPage) {
+                fromPage.blocks.forEach(block => {
+                    if(block.type == 'video') {
+                        let video = document.getElementById('video_' + block.id)
+    
+                        if(video) {
+                            video.load()
+                        }
                     }
-                }
+    
+                    if(block.type == 'routes') {
+                        this.$refs.pesok.$refs.routes[0].resetRoutes()
+                        this.$refs.pesok.$refs.routes[0].zoomReset()
+                    }
+                })
+            }
 
-                if(block.type == 'routes') {
-                    this.$refs.pesok.$refs.routes[0].resetRoutes()
-                    this.$refs.pesok.$refs.routes[0].zoomReset()
+            if(toPage) {
+                if(toPage == 'home') {
+                    this.$router.push({ name: 'Home', params: { kiosk: this.$route.params.kiosk } })
+                } else {
+                    this.$router.push({ name: 'Page', params: { id: toPage.id, kiosk: this.$route.params.kiosk } })
                 }
-            })
-
-            this.$router.push({ name: 'Home', params: { kiosk: this.$route.params.kiosk } })
+            }
         },
     },
     components: {

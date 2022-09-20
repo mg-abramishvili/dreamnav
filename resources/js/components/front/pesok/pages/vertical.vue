@@ -32,10 +32,16 @@
                     <Routes ref="routes" :kiosk="kiosk" />
                 </div>
             </template>
+
+            <template v-if="page.is_folder">
+                <ul>
+                    <li v-for="pg in page.children">{{ pg.name }}</li>
+                </ul>
+            </template>
         </div>
 
         <div class="footer page-footer">
-            <button @click="goHome()">На главную</button>
+            <button @click="goTo(page, 'home')">На главную</button>
         </div>
     </div>
 </template>
@@ -66,8 +72,8 @@ export default {
 
             return block.id
         },
-        goHome() {
-            this.$parent.goHome(this.page)
+        goTo(fromPage, toPage) {
+            this.$parent.goTo(fromPage, toPage)
         },
     },
     components: {

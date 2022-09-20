@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function index()
     {
-        return Page::orderBy('order', 'asc')->with('blocks', 'icon')->get();
+        return Page::where('parent_id', null)->orderBy('order', 'asc')->with('blocks', 'icon')->get();
     }
 
     public function page($id)
@@ -18,6 +18,7 @@ class PageController extends Controller
             ->with(['blocks' => function ($query) {
                 $query->orderBy('order', 'asc');
             }])
+            ->with('children')
             ->find($id);
     }
 }
