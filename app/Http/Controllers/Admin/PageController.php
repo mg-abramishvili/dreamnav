@@ -103,6 +103,11 @@ class PageController extends Controller
             return response('Папку нельзя удалить - внутри есть страницы', 500);
         }
 
+        foreach($page->blocks as $block)
+        {
+            $block->delete();
+        }
+
         $page->delete();
     }
 }
