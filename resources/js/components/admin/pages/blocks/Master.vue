@@ -16,6 +16,8 @@
                 <PdfMaster v-if="block.type == 'pdf'" :block="block" />
                 
                 <ExcelMaster v-if="block.type == 'excel'" :block="block" />
+                
+                <IframeMaster v-if="block.type == 'iframe'" :block="block" />
             </div>
         </div>
     </div>
@@ -27,6 +29,7 @@ import ImageMaster from './types/ImageMaster.vue'
 import VideoMaster from './types/VideoMaster.vue'
 import PdfMaster from './types/PdfMaster.vue'
 import ExcelMaster from './types/ExcelMaster.vue'
+import IframeMaster from './types/IframeMaster.vue'
 
 export default {
     props: ['block'],
@@ -54,6 +57,7 @@ export default {
         VideoMaster,
         PdfMaster,
         ExcelMaster,
+        IframeMaster,
     }
 }
 </script>

@@ -53,16 +53,19 @@
                             <button @click="addBlock('video')" class="btn btn-outline-primary">+ Видео</button>
                         </li>
                         <li>
-                            <button @click="addBlock('pdf')" class="btn btn-outline-primary">+ PDF-файл</button>
+                            <button @click="addBlock('pdf')" class="btn btn-outline-primary">+ PDF</button>
                         </li>
                         <li>
-                            <button @click="addBlock('excel')" class="btn btn-outline-primary">+ Excel-файл</button>
+                            <button @click="addBlock('excel')" class="btn btn-outline-primary">+ Excel</button>
                         </li>
                         <li>
                             <button @click="addBlock('iframe')" class="btn btn-outline-primary">+ iFrame</button>
                         </li>
                         <li>
                             <button @click="addBlock('routes')" class="btn btn-outline-primary">+ Маршруты</button>
+                        </li>
+                        <li>
+                            <button @click="addBlock('events')" class="btn btn-outline-primary">+ Афиша</button>
                         </li>
                     </ul>
                 </div>
@@ -121,9 +124,24 @@
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
 
+                            <div v-else-if="element.type == 'iframe'" class="block-area">
+                                <div>
+                                    <p @click="editBlock(element)" v-if="element.content" class="m-0">{{ element.content }}</p>
+                                    <p @click="editBlock(element)" v-else class="m-0">Укажите адрес для iFrame</p>
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
+
                             <div v-else-if="element.type == 'routes'" class="block-area">
                                 <div>
                                     <p class="m-0">Блок Маршруты</p>
+                                </div>
+                                <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
+                            </div>
+
+                            <div v-else-if="element.type == 'events'" class="block-area">
+                                <div>
+                                    <p class="m-0">Блок Афиша</p>
                                 </div>
                                 <button @click="removeBlock(element.id)" class="btn btn-secondary">&times;</button>
                             </div>
@@ -238,7 +256,7 @@ export default {
             let content = ''
 
             if(blockType == 'text') {
-                content = "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p><p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+                content = "<p>Текст...</p>"
             }
 
             if(blockType == 'routes') {
@@ -252,6 +270,17 @@ export default {
                 content = "routes"
             }
 
+            if(blockType == 'events') {
+                if(this.blocks.length) {
+                    return this.$swal({
+                        text: 'Блок Афиша нельзя совмещать с другими блоками',
+                        icon: 'error',
+                    })
+                }
+
+                content = "events"
+            }
+
             let newBlock = {
                 id: 'temp_' + blockType + '_' + Math.floor((Math.random()*100) + 1) + '_' + Math.floor((Math.random()*100) + 1),
                 type: blockType,
@@ -262,6 +291,13 @@ export default {
             if(this.blocks.find(block => block.type == 'routes')) {
                 return this.$swal({
                     text: 'Блок Маршруты нельзя совмещать с другими блоками',
+                    icon: 'error',
+                })
+            }
+
+            if(this.blocks.find(block => block.type == 'events')) {
+                return this.$swal({
+                    text: 'Блок Афиша нельзя совмещать с другими блоками',
                     icon: 'error',
                 })
             }

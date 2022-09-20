@@ -28,6 +28,10 @@
                     <div :id="XlsxTable(block)" style="text-align: center;"></div>
                 </div>
 
+                <div v-else-if="block.type == 'iframe'">
+                    <iframe :src="block.content" frameborder="0" style="width: 100%; height: 85vh; background: white"></iframe>
+                </div>
+
                 <div v-else-if="block.type == 'routes'">
                     <Routes ref="routes" :kiosk="kiosk" />
                 </div>
