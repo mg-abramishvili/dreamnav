@@ -186,6 +186,32 @@
 .page-block-image-slider-max .image_slider-slide {
     height: 80vh;
 }
+.page-block-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    color: #fff;
+    width: 4vh;
+    height: 4vh;
+    background: #000;
+    border-radius: 100%;
+    padding: 0.75vh;
+    border: 0.1vh solid #fff;
+}
+.page-block-navigation svg {
+    width: auto;
+    height: 100%;
+}
+.page-block-navigation-prev {
+    left: 0.5vh;
+}
+.page-block-navigation-next {
+    right: 0.5vh;
+}
 /* PAGE */
 
 .events {

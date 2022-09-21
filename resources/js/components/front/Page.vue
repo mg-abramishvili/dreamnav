@@ -51,6 +51,10 @@ export default {
                     if(block.type == 'events') {
                         this.$refs.pesok.$refs.events[0].slideToZero()
                     }
+
+                    if(block.type == 'image_slider') {
+                        this.$refs.pesok.slideToZero()
+                    }
                 })
             }
 
