@@ -172,6 +172,14 @@
     display: block;
     margin: 0 auto;
 }
+.page-block-image-mini img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 30vh;
+    display: block;
+    margin: 0 auto;
+}
 .page-block-image-slider {
     margin: 0;
 }

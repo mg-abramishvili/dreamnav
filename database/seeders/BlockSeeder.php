@@ -84,6 +84,24 @@ class BlockSeeder extends Seeder
                 'created_at' => '2022-09-10 07:00:00',
                 'updated_at' => '2022-09-10 07:00:00'
             ],
+            [
+                'id' => 9,
+                'page_id' => 6,
+                'type' => 'image',
+                'content' => '/img/pesok/qr-code.png',
+                'order' => 1,
+                'created_at' => '2022-09-10 07:00:00',
+                'updated_at' => '2022-09-10 07:00:00'
+            ],
+            [
+                'id' => 10,
+                'page_id' => 6,
+                'type' => 'text',
+                'content' => '<p>+7 (813) 704-33-21 Информационный</p><p>+7 (952) 222-46-45 Охрана</p>',
+                'order' => 1,
+                'created_at' => '2022-09-10 07:00:00',
+                'updated_at' => '2022-09-10 07:00:00'
+            ],
         ]);
     }
 }

@@ -10,7 +10,7 @@
                     <div v-html="block.content"></div>
                 </div>
 
-                <div v-else-if="block.type == 'image'" class="page-block page-block-image">
+                <div v-else-if="block.type == 'image'" class="page-block page-block-image" :class="[`${page.blocks.length > 1 ? 'page-block-image-mini':'page-block-image-max'}`]">
                     <img :src="block.content" alt="">
                 </div>
 

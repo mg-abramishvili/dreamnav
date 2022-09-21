@@ -20,7 +20,7 @@ export default {
 
             editor: ClassicEditor,
             editorConfig: {
-                toolbar: [ 'bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'insertTable', '|', 'undo', 'redo' ],
+                toolbar: [ 'bold', 'italic', '|', 'alignment', '|', 'bulletedList', 'numberedList', '|', 'insertTable', '|', 'undo', 'redo' ],
             },
         };
     },
