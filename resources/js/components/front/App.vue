@@ -98,7 +98,7 @@
             this.ScreensaverStartTimer()
         },
         beforeMount() {
-            // document.oncontextmenu = new Function("return false")
+            document.oncontextmenu = new Function("return false")
         },
         components: {
             PesokTheme,
