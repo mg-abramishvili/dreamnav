@@ -292,6 +292,7 @@
     flex-wrap: wrap;
     max-height: 80vh;
     overflow-y: auto;
+    justify-content: center;
 }
 
 .folder li {
