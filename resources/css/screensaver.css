@@ -36,6 +36,23 @@
     position: relative;
     overflow: hidden;
 }
+.ScreensaverHooper-slide:after {
+    content: "";
+    position: absolute;
+    top: auto;
+    left: 0;
+    right: 0;
+    width: 15vh;
+    height: 15vh;
+    z-index: 10;
+    background: url(/img/pesok/touch-icon.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 0 auto;
+    bottom: 10vh;
+    opacity: 0.5;
+}
 
 .ScreensaverHooper-slide img,
 .ScreensaverHooper-slide video {

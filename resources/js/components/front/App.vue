@@ -28,7 +28,7 @@
                 screensaver: {
                     isActive: true,
                     timeoutID: '',
-                    timer: 3000,
+                    timer: 60000,
                     slides: [],
                 },
             }
