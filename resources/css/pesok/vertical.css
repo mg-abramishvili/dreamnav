@@ -47,6 +47,9 @@
     padding: 2.5vh;
     text-align: center;
 }
+.sidebar .logo {
+    height: 57vh;
+}
 .sidebar .logo img {
     width: 100%;
     margin-bottom: 3vh;
@@ -57,6 +60,23 @@
     font-size: 3.5vh;
     font-family: 'Cimero Pro';
     line-height: 1.2;
+}
+.sidebar .logo span {
+    font-family: 'Cimero Pro';
+    line-height: 1.2;
+    font-size: 1.8vh;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 2vh;
+}
+.sidebar-bottom {
+    height: 13vh;
+    display: flex;
+    justify-content: space-between;
+}
+.sidebar-bottom img {
+    width: auto;
+    height: 7.5vh;
 }
 .menu {
     width: 65vw;

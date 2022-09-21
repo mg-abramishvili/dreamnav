@@ -24,6 +24,11 @@
                 <div class="logo">
                     <img :src="$parent.config.logo" alt="">
                     <p>{{ $parent.config.title }}</p>
+                    <span>Общественное<br>пространство</span>
+                </div>
+                <div class="sidebar-bottom">
+                    <img src="/img/pesok/sidebar-bottom1.png" alt="">
+                    <img src="/img/pesok/sidebar-bottom2.png" alt="">
                 </div>
             </div>
             <div class="menu">
