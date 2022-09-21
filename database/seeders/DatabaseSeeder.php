@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
             BlockSeeder::class,
             BannerSeeder::class,
+            EventSeeder::class,
+            IconSeeder::class,
         ]);
     }
 }

@@ -172,6 +172,20 @@
     display: block;
     margin: 0 auto;
 }
+.page-block-image-slider {
+    margin: 0;
+}
+.page-block-image-slider .image_slider-slide {
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.page-block-image-slider-mini .image_slider-slide {
+    height: 40vh;
+}
+.page-block-image-slider-max .image_slider-slide {
+    height: 80vh;
+}
 /* PAGE */
 
 .events {

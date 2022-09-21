@@ -14,6 +14,21 @@
                     <img :src="block.content" alt="">
                 </div>
 
+                <div v-else-if="block.type == 'image_slider'" class="page-block page-block-image-slider" :class="[`${page.blocks.length > 1 ? 'page-block-image-slider-mini':'page-block-image-slider-max'}`]">
+                    <swiper v-if="block.content"
+                        :slides-per-view="1"
+                        :space-between="0"
+                        :loop="false"
+                        :allow-touch-move="true"
+                        @swiper="onSwiper"
+                        class="image_slider-slider" >
+                        
+                        <swiper-slide v-for="(s, index) in block.content.split(',')">
+                            <div class="image_slider-slide" v-bind:style="{ 'background-image': 'url(' + s + ')' }"></div>
+                        </swiper-slide>
+                    </swiper>
+                </div>
+
                 <div v-else-if="block.type == 'video'" class="page-block page-block-video">
                     <video v-if="block.content" :id="'video_' + block.id" autoplay controls disablePictureInPicture controlsList="noplaybackrate nodownload">
                         <source :src="block.content" type="video/mp4" />
@@ -64,6 +79,9 @@ import { read, utils } from 'xlsx'
 import Routes from '../../_comps/Routes.vue'
 import Events from '../../_comps/Events.vue'
 
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+
 export default {
     props: ['page', 'kiosk'],
     data() {
@@ -89,10 +107,28 @@ export default {
         goTo(fromPage, toPage) {
             this.$parent.goTo(fromPage, toPage)
         },
+        onSwiper(swiper) {
+            this.swiper = swiper
+        },
+        prev() {
+            let currentSlide = this.swiper.realIndex
+
+            this.swiper.slideTo(currentSlide - 1)
+        },
+        next() {
+            let currentSlide = this.swiper.realIndex
+
+            this.swiper.slideTo(currentSlide + 1)
+        },
+        slideToZero() {
+            this.swiper.slideTo(0)
+        }
     },
     components: {
         Routes,
         Events,
+        Swiper,
+        SwiperSlide,
     }
 }
 </script>
