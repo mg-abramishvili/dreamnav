@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             ScreensaverSeeder::class,
             IconSeeder::class,
+            SchemeSeeder::class,
+            KioskSeeder::class,
+            PointSeeder::class,
         ]);
     }
 }
