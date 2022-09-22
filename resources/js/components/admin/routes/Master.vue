@@ -52,7 +52,7 @@
                     <button @click="undoDotFloor1" class="btn btn-sm btn-outline-danger">&larr;</button>
                 </div>
 
-                <div id="wrapper-map" class="wrapper-map mb-4" @click="clickOnMapScheme($event, 1)">
+                <div v-if="selected.scheme1" id="wrapper-map" class="wrapper-map mb-4" @click="clickOnMapScheme($event, 1)">
                     <img :src="selected.scheme1.image" alt="">
                     <svg xmlns="http://www.w3.org/2000/svg" id="map-path" class="map-path"></svg>
                 </div>
@@ -79,7 +79,7 @@
                     <button @click="undoDotFloor2" class="btn btn-sm btn-outline-danger">&larr;</button>
                 </div>
 
-                <div id="wrapper-map2" class="wrapper-map mb-4" @click="clickOnMapScheme($event, 2)">
+                <div v-if="selected.scheme2" id="wrapper-map2" class="wrapper-map mb-4" @click="clickOnMapScheme($event, 2)">
                     <img :src="selected.scheme2.image" alt="">
                     <svg xmlns="http://www.w3.org/2000/svg" id="map-path2" class="map-path"></svg>
                 </div>
@@ -134,34 +134,36 @@
         },
         created() {
             this.loadKiosks()
-            this.loadPoints()
-            this.loadSchemes()
-
-            if(this.$route.params.id) {
-                this.loadRoute()
-            }
-
-            if(!this.$route.params.id) {
-                this.views.loading = false
-            }
         },
         methods: {
-            loadSchemes() {
-                axios.get('/api/admin/schemes')
-                .then(response => {
-                    this.schemes = response.data
-                })
-            },
             loadKiosks() {
                 axios.get('/api/admin/kiosks')
                 .then(response => {
                     this.kiosks = response.data
+
+                    this.loadSchemes()
+                })
+            },
+            loadSchemes() {
+                axios.get('/api/admin/schemes')
+                .then(response => {
+                    this.schemes = response.data
+
+                    this.loadPoints()
                 })
             },
             loadPoints() {
                 axios.get('/api/admin/points')
                 .then(response => {
                     this.points = response.data
+
+                    if(this.$route.params.id) {
+                        this.loadRoute()
+                    }
+
+                    if(!this.$route.params.id) {
+                        this.views.loading = false
+                    }
                 })
             },
             loadRoute() {
@@ -176,8 +178,6 @@
                     if(response.data.scheme2_id) {
                         this.selected.scheme2 = this.schemes.find(s => s.id == response.data.scheme2_id)
                     }
-
-                    this.views.loading = false
 
                     setTimeout(() => {
                         response.data.route_code_floor1.forEach((i, index) => {
@@ -198,6 +198,8 @@
                             })
                         }
                     }, 500)
+
+                    this.views.loading = false
                 })
             },
             clickOnMapScheme(event, mapID) {

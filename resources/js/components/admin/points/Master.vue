@@ -37,7 +37,7 @@
             <div class="mb-4">
                 <button @click="undo()" class="btn btn-sm btn-outline-secondary">&larr;</button>
 
-                <div @click="createPoint($event)" class="point-drawing-area">
+                <div v-if="selected.scheme" @click="createPoint($event)" class="point-drawing-area">
                     <img :src="selected.scheme.image" alt="" class="border">
                 </div>
             </div>
@@ -71,10 +71,6 @@ export default {
     },
     created() {
         this.loadSchemes()
-
-        if(this.$route.params.id) {
-            this.loadPoint()
-        }
     },
     methods: {
         loadSchemes() {
@@ -82,7 +78,11 @@ export default {
             .then(response => {
                 this.schemes = response.data
 
-                this.views.loading = false
+                if(this.$route.params.id) {
+                    this.loadPoint()
+                } else {
+                    this.views.loading = false
+                }
             })
         },
         loadPoint() {
