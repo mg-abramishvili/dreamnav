@@ -442,23 +442,32 @@
     list-style-type: none;
     margin: 0;
     padding: 1vh;
-    height: 25vh;
+    height: 19vh;
     overflow-y: auto;
-    columns: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .routes-list ul li {
     margin-bottom: 1vh;
+    width: calc(50% - 1vh);
+    height: 5vh;
+    overflow: hidden;
+    line-height: 1;
 }
 .routes-list ul li:last-child {
     margin-bottom: 0;
 }
 .routes-list ul li a {
-    display: block;
     padding: 0.5vh 2vh;
     font-size: 2vh;
     border: 0;
     background-color: rgba(0,0,0,0.1);
     border-radius: 0.5vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .route-about {
