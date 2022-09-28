@@ -33,10 +33,16 @@
                                 <circle v-if="point.x" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
                             </template>
 
-                            <polygon v-for="point in points.filter(p => p.scheme_id == selected.scheme.id)" @click="selectPoint(point)" :points="point.object.join()" style="fill:transparent;stroke:transparent;stroke-width:1"></polygon>
+                            <template v-for="point in points.filter(p => p.scheme_id == selected.scheme.id)">
+                                <polygon v-if="selected.route.point_id == point.id" @click="selectPoint(point)" :points="point.object.join()" style="fill:rgba(0,0,255,0.05);stroke:transparent;stroke-width:1"></polygon>
+                                <polygon v-else @click="selectPoint(point)" :points="point.object.join()" style="fill:transparent;stroke:transparent;stroke-width:1"></polygon>
+                                
+                                <text v-if="selected.route.point_id == point.id" style="stroke: #ffffff; stroke-width: 0.2px;" :x="point.object[0].split(' ')[0]" :y="point.object[0].split(' ').pop()" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
+                                    <tspan dx='5' dy='5' font-weight='bold'>{{ point.name }}</tspan>
+                                </text>
+                            </template>
                         </svg>
                     </template>
-                    
 
                     <!-- <svg v-if="selected.slide === 2" class="map-path svg2">
                         <template v-for="(point, index) in selected.route.route_code_floor2">
@@ -49,6 +55,20 @@
                             <circle v-if="point.x" id="02" :cx="point.x" :cy="point.y" r="0" fill="#f33"></circle>
                         </template>
                     </svg> -->
+
+                    <template v-if="kiosks.length">
+                        <svg v-bind:style="{'top': kiosks.find(k => k.id == kiosk).y, 'left': kiosks.find(k => k.id == kiosk).x, 'position': 'absolute', 'z-index': 10 }">
+                            <circle
+                                fill="red"
+                                :cx="0"
+                                :cy="0"
+                                r="6" >
+                            </circle>
+                            <text style="stroke: #ffffff; stroke-width: 0.2px;" :x="0" :y="0" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
+                                <tspan dx='5' dy='5' font-weight='bold'>Вы здесь</tspan>
+                            </text>
+                        </svg>
+                    </template>
                 </div>
             </div>
         </div>
@@ -123,6 +143,7 @@ export default {
             schemes: [],
             routes: [],
             points: [],
+            kiosks: [],
 
             selected: {
                 scheme: '',
@@ -152,6 +173,7 @@ export default {
         this.loadSchemes()
         this.loadRoutes()
         this.loadPoints()
+        this.loadKiosks()
     },
     computed: {
         filtered_routes: function () {
@@ -183,6 +205,12 @@ export default {
             axios.get(`/api/points`)
             .then(response => {
                 this.points = response.data
+            })
+        },
+        loadKiosks() {
+            axios.get(`/api/kiosks`)
+            .then(response => {
+                this.kiosks = response.data
             })
         },
         SelectRoute(route) {

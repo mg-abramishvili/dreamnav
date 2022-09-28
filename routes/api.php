@@ -26,6 +26,9 @@ Route::get('route/{id}', [App\Http\Controllers\RouteController::class, 'route'])
 // FRONT POINTS
 Route::get('points', [App\Http\Controllers\PointController::class, 'index']);
 
+// FRONT KIOSKS
+Route::get('kiosks', [App\Http\Controllers\KioskController::class, 'index']);
+
 // FRONT EVENTS
 Route::get('events', [App\Http\Controllers\EventController::class, 'index']);
 
