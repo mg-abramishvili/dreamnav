@@ -34,4 +34,21 @@ class PointController extends Controller
 
         $point->save();
     }
+
+    public function update($id, Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'scheme_id' => 'required',
+            'object' => 'required',
+        ]);
+
+        $point = Point::find($id);
+        
+        $point->name = $request->name;
+        $point->scheme_id = $request->scheme_id;
+        $point->object = $request->object;
+
+        $point->save();
+    }
 }

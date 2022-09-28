@@ -57,14 +57,14 @@
                     </svg> -->
 
                     <template v-if="kiosks.length">
-                        <svg v-bind:style="{'top': kiosks.find(k => k.id == kiosk).y, 'left': kiosks.find(k => k.id == kiosk).x, 'position': 'absolute', 'z-index': 10 }">
+                        <svg style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%;">
                             <circle
                                 fill="red"
-                                :cx="0"
-                                :cy="0"
+                                :cx="kiosks.find(k => k.id == kiosk).x"
+                                :cy="kiosks.find(k => k.id == kiosk).y"
                                 r="6" >
                             </circle>
-                            <text style="stroke: #ffffff; stroke-width: 0.2px;" :x="0" :y="0" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
+                            <text style="stroke: #ffffff; stroke-width: 0.2px;" :x="kiosks.find(k => k.id == kiosk).x" :y="kiosks.find(k => k.id == kiosk).y" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
                                 <tspan dx='5' dy='5' font-weight='bold'>Вы здесь</tspan>
                             </text>
                         </svg>

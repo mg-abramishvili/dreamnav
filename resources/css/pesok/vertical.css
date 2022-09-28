@@ -387,8 +387,10 @@
 }
 .map1080 {
     transform: scale(1.25);
+    transform: scale(1);
     transform-origin: 0 0;
     margin-bottom: 14vh;
+    margin-bottom: 2vh;
 }
 .map4K {
     transform: scale(2.5);
@@ -436,6 +438,7 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    z-index: 100;
 }
 
 .routes-list ul {
