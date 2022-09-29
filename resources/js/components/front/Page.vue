@@ -50,6 +50,7 @@ export default {
 
                     if(block.type == 'events') {
                         this.$refs.pesok.$refs.events[0].slideToZero()
+                        this.$refs.pesok.$refs.events[0].descriptionModalContent = ''
                     }
 
                     if(block.type == 'image_slider') {
