@@ -19,6 +19,8 @@
         "filepond-plugin-file-validate-type": "^1.2.8",
         "filepond-plugin-image-preview": "^4.6.11",
         "moment": "^2.29.4",
+        "simple-keyboard": "^3.4.164",
+        "simple-keyboard-layouts": "^3.1.193",
         "swiper": "^8.3.2",
         "vue-filepond": "^7.0.3",
         "vue-router": "^4.1.5",

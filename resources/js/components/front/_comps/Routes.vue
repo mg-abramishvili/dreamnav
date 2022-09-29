@@ -2,9 +2,23 @@
     <div>
         <div class="panzoom-wrapper" :class="[`${views.windowWidth > 1920 ? 'map4K':'map1080'}`]">
             <div class="panzoom-controls">
-                <button @click="zoomIn()">+</button>
+                <button @click="zoomIn()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                </button>
                 <br>
-                <button @click="zoomOut()">-</button>
+                <button @click="zoomOut()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                    </svg>
+                </button>
+                <br>
+                <button @click="openSearchPanel()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
             </div>
 
             <div id="panzoom">
@@ -109,11 +123,11 @@
             Продолжить маршрут
         </button> -->
 
-        <!-- <div v-show="views.searchPanel == true" class="search-panel">
-            <button @click="searchPanel_button_close()" class="search-panel-close-button">&times;</button>
+        <div v-show="views.searchPanel" class="search-panel">
+            <button @click="closeSearchPanel()" class="search-panel-close-button">&times;</button>
             <ul>
-                <li v-for="route in filtered_routes" :key="route.id" @click="SelectRoute(route)">
-                    <a>{{ route.name }}</a>
+                <li v-for="route in filteredRoutes" :key="route.id" @click="SelectRoute(route)">
+                    <a>{{ route.point.name }}</a>
                 </li>
             </ul>
 
@@ -128,13 +142,13 @@
                     <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="searchInput"/>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
 <script>
 import Panzoom from '@panzoom/panzoom'
-// import SimpleKeyboard from "./routes_keyboard.vue"
+import SimpleKeyboard from "./kbRoutes.vue"
 
 export default {
     props: ['kiosk'],
@@ -176,12 +190,12 @@ export default {
         this.loadKiosks()
     },
     computed: {
-        filtered_routes: function () {
+        filteredRoutes() {
             if (this.searchInput.trim() === '') {
                 return this.routes
             } else {
-                return this.routes.filter(item => {
-                return item.name.toLowerCase().indexOf(this.searchInput.toLowerCase()) >= 0
+                return this.routes.filter(route => {
+                    return route.point.name.toLowerCase().indexOf(this.searchInput.toLowerCase()) >= 0
                 })
             }
         },
@@ -245,13 +259,13 @@ export default {
         onInputChange(input) {
             this.searchInput = input.target.value
         },
-        searchPanel_button() {
+        openSearchPanel() {
             this.views.searchPanel = true
             this.selected.route = {}
         },
-        searchPanel_button_close() {
-            this.views.searchPanel = false
+        closeSearchPanel() {
             this.resetRoutes()
+            this.views.searchPanel = false
         },
         resetRoutes() {
             this.selected.slide = 1
@@ -271,7 +285,7 @@ export default {
     },
     components: {
         Panzoom,
-        // SimpleKeyboard,
+        SimpleKeyboard,
     }
 }
 </script>
