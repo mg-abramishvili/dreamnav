@@ -47,6 +47,7 @@ export default {
                         this.$refs.pesok.$refs.routes[0].closeSearchPanel()
                         this.$refs.pesok.$refs.routes[0].resetRoutes()
                         this.$refs.pesok.$refs.routes[0].zoomReset()
+                        this.$refs.pesok.$refs.routes[0].slideToZero()
                     }
 
                     if(block.type == 'events') {

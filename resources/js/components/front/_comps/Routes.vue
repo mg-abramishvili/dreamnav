@@ -88,11 +88,33 @@
         </div>
 
         <div class="routes-list">
-            <ul>
-                <li v-for="route in routes" :key="route.id" @click="SelectRoute(route)">
-                    <a>{{ route.point.name }}</a>
-                </li>
-            </ul>
+            <swiper v-if="routes.length"
+                :slides-per-view="1"
+                :space-between="0"
+                :loop="false"
+                :allow-touch-move="true"
+                @swiper="onSwiper"
+                class="routes-list-slider">
+                
+                <swiper-slide v-for="i in Math.ceil(routes.length / 6)">
+                    <ul>
+                        <li v-for="route in routes.slice((i - 1) * 6, i * 6)" :key="route.id" @click="SelectRoute(route)">
+                            <a>{{ route.point.name }}</a>
+                        </li>
+                    </ul>
+                </swiper-slide>
+
+                <button v-if="routes.length > 6" @click="prev()" class="routes-list-navigation routes-list-navigation-prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    </svg>
+                </button>
+                <button v-if="routes.length > 6" @click="next()" class="routes-list-navigation routes-list-navigation-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
+            </swiper>
         </div>
 
         <!-- <button @click="searchPanel_button()" class="route-open-search-panel-button">
@@ -149,6 +171,9 @@
 <script>
 import Panzoom from '@panzoom/panzoom'
 import SimpleKeyboard from "./kbRoutes.vue"
+
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
 
 export default {
     props: ['kiosk'],
@@ -282,10 +307,28 @@ export default {
         zoomReset() {
             this.panzoom.reset()
         },
+        onSwiper(swiper) {
+            this.swiper = swiper
+        },
+        prev() {
+            let currentSlide = this.swiper.realIndex
+
+            this.swiper.slideTo(currentSlide - 1)
+        },
+        next() {
+            let currentSlide = this.swiper.realIndex
+
+            this.swiper.slideTo(currentSlide + 1)
+        },
+        slideToZero() {
+            this.swiper.slideTo(0)
+        }
     },
     components: {
         Panzoom,
         SimpleKeyboard,
+        Swiper,
+        SwiperSlide,
     }
 }
 </script>
