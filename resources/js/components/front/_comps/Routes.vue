@@ -51,9 +51,9 @@
                                 <polygon v-if="selected.route.point_id == point.id" @click="selectPoint(point)" :points="point.object.join()" style="fill:rgba(0,0,255,0.05);stroke:transparent;stroke-width:1"></polygon>
                                 <polygon v-else @click="selectPoint(point)" :points="point.object.join()" style="fill:transparent;stroke:transparent;stroke-width:1"></polygon>
                                 
-                                <text v-if="selected.route.point_id == point.id" style="stroke: #ffffff; stroke-width: 0.2px;" :x="point.object[0].split(' ')[0]" :y="point.object[0].split(' ').pop()" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
+                                <!-- <text v-if="selected.route.point_id == point.id" style="stroke: #ffffff; stroke-width: 0.2px;" :x="point.object[0].split(' ')[0]" :y="point.object[0].split(' ').pop()" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
                                     <tspan dx='5' dy='5' font-weight='bold'>{{ point.name }}</tspan>
-                                </text>
+                                </text> -->
                             </template>
                         </svg>
                     </template>
@@ -72,12 +72,20 @@
 
                     <template v-if="kiosks.length">
                         <svg style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100%; height: 100%;">
-                            <circle
+                            <!-- <circle
                                 fill="red"
                                 :cx="kiosks.find(k => k.id == kiosk).x"
                                 :cy="kiosks.find(k => k.id == kiosk).y"
                                 r="6" >
-                            </circle>
+                            </circle> -->
+
+                            <g :transform="'translate(' + (kiosks.find(k => k.id == kiosk).x - 12) + ',' + (kiosks.find(k => k.id == kiosk).y - 12) + ')'">
+                                <svg width="24" height="24" fill="none" stroke="none">
+                                    <path fill="red" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle fill="white" cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </g>
+
                             <text style="stroke: #ffffff; stroke-width: 0.2px;" :x="kiosks.find(k => k.id == kiosk).x" :y="kiosks.find(k => k.id == kiosk).y" font-family='Verdana' font-size='6' fill='blue' text-anchor="left">
                                 <tspan dx='5' dy='5' font-weight='bold'>Вы здесь</tspan>
                             </text>
